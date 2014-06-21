@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MoneyManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BudgetHeaders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BudgetLineItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BudgetHeaderId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreditCardTransactions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RegisterLineItemID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegisterLineItemDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LineItemID" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegisterLineItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Notes" Type="text" Nullable="false" />
+          <Property Name="IsCleared" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BudgetLineItems_BudgetHeaders">
+          <End Role="BudgetHeaders" Type="Self.BudgetHeaders" Multiplicity="1" />
+          <End Role="BudgetLineItems" Type="Self.BudgetLineItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BudgetHeaders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BudgetLineItems">
+              <PropertyRef Name="BudgetHeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetLineItems_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="BudgetLineItems" Type="Self.BudgetLineItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BudgetLineItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditCardTransactions_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="CreditCardTransactions" Type="Self.CreditCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CreditCardTransactions">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditCardTransactions_RegisterLineItems">
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="1" />
+          <End Role="CreditCardTransactions" Type="Self.CreditCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisterLineItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CreditCardTransactions">
+              <PropertyRef Name="RegisterLineItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItemDetails_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItemDetails">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItemDetails_RegisterLineItems">
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="1" />
+          <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisterLineItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItemDetails">
+              <PropertyRef Name="LineItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItems_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MoneyManagerModelStoreContainer">
+          <EntitySet Name="BudgetHeaders" EntityType="Self.BudgetHeaders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BudgetLineItems" EntityType="Self.BudgetLineItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditCardTransactions" EntityType="Self.CreditCardTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegisterLineItemDetails" EntityType="Self.RegisterLineItemDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegisterLineItems" EntityType="Self.RegisterLineItems" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BudgetLineItems_BudgetHeaders" Association="Self.FK_BudgetLineItems_BudgetHeaders">
+            <End Role="BudgetHeaders" EntitySet="BudgetHeaders" />
+            <End Role="BudgetLineItems" EntitySet="BudgetLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetLineItems_Categories" Association="Self.FK_BudgetLineItems_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="BudgetLineItems" EntitySet="BudgetLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditCardTransactions_Categories" Association="Self.FK_CreditCardTransactions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditCardTransactions_RegisterLineItems" Association="Self.FK_CreditCardTransactions_RegisterLineItems">
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+            <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItemDetails_Categories" Association="Self.FK_RegisterLineItemDetails_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RegisterLineItemDetails" EntitySet="RegisterLineItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItemDetails_RegisterLineItems" Association="Self.FK_RegisterLineItemDetails_RegisterLineItems">
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+            <End Role="RegisterLineItemDetails" EntitySet="RegisterLineItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItems_Categories" Association="Self.FK_RegisterLineItems_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MoneyManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BudgetHeader">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="BudgetLineItems" Relationship="MoneyManagerModel.FK_BudgetLineItems_BudgetHeaders" FromRole="BudgetHeader" ToRole="BudgetLineItem" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CreditCardTransactions" Relationship="Self.FK_CreditCardTransactions_Categories" FromRole="Categories" ToRole="CreditCardTransactions" />
+          <NavigationProperty Name="RegisterLineItemDetails" Relationship="Self.FK_RegisterLineItemDetails_Categories" FromRole="Categories" ToRole="RegisterLineItemDetails" />
+          <NavigationProperty Name="RegisterLineItems" Relationship="Self.FK_RegisterLineItems_Categories" FromRole="Categories" ToRole="RegisterLineItems" />
+          <NavigationProperty Name="BudgetLineItems" Relationship="MoneyManagerModel.FK_BudgetLineItems_Categories" FromRole="Category" ToRole="BudgetLineItem" />
+        </EntityType>
+        <EntityType Name="CreditCardTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RegisterLineItemID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_CreditCardTransactions_Categories" FromRole="CreditCardTransactions" ToRole="Categories" />
+          <NavigationProperty Name="RegisterLineItem" Relationship="Self.FK_CreditCardTransactions_RegisterLineItems" FromRole="CreditCardTransactions" ToRole="RegisterLineItems" />
+        </EntityType>
+        <EntityType Name="RegisterLineItemDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LineItemID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_RegisterLineItemDetails_Categories" FromRole="RegisterLineItemDetails" ToRole="Categories" />
+          <NavigationProperty Name="RegisterLineItem" Relationship="Self.FK_RegisterLineItemDetails_RegisterLineItems" FromRole="RegisterLineItemDetails" ToRole="RegisterLineItems" />
+        </EntityType>
+        <EntityType Name="RegisterLineItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsCleared" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_RegisterLineItems_Categories" FromRole="RegisterLineItems" ToRole="Categories" />
+          <NavigationProperty Name="CreditCardTransactions" Relationship="Self.FK_CreditCardTransactions_RegisterLineItems" FromRole="RegisterLineItems" ToRole="CreditCardTransactions" />
+          <NavigationProperty Name="RegisterLineItemDetails" Relationship="Self.FK_RegisterLineItemDetails_RegisterLineItems" FromRole="RegisterLineItems" ToRole="RegisterLineItemDetails" />
+        </EntityType>
+        <Association Name="FK_CreditCardTransactions_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+          <End Role="CreditCardTransactions" Type="Self.CreditCardTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CreditCardTransactions">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItemDetails_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+          <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItemDetails">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItems_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItems">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditCardTransactions_RegisterLineItems">
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItem" Multiplicity="1" />
+          <End Role="CreditCardTransactions" Type="Self.CreditCardTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisterLineItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CreditCardTransactions">
+              <PropertyRef Name="RegisterLineItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisterLineItemDetails_RegisterLineItems">
+          <End Role="RegisterLineItems" Type="Self.RegisterLineItem" Multiplicity="1" />
+          <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegisterLineItems">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RegisterLineItemDetails">
+              <PropertyRef Name="LineItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MoneyManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BudgetHeaders" EntityType="Self.BudgetHeader" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CreditCardTransactions" EntityType="Self.CreditCardTransaction" />
+          <EntitySet Name="RegisterLineItemDetails" EntityType="Self.RegisterLineItemDetail" />
+          <EntitySet Name="RegisterLineItems" EntityType="Self.RegisterLineItem" />
+          <AssociationSet Name="FK_CreditCardTransactions_Categories" Association="Self.FK_CreditCardTransactions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItemDetails_Categories" Association="Self.FK_RegisterLineItemDetails_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RegisterLineItemDetails" EntitySet="RegisterLineItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItems_Categories" Association="Self.FK_RegisterLineItems_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditCardTransactions_RegisterLineItems" Association="Self.FK_CreditCardTransactions_RegisterLineItems">
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+            <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisterLineItemDetails_RegisterLineItems" Association="Self.FK_RegisterLineItemDetails_RegisterLineItems">
+            <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
+            <End Role="RegisterLineItemDetails" EntitySet="RegisterLineItemDetails" />
+          </AssociationSet>
+          <EntitySet Name="BudgetLineItems" EntityType="MoneyManagerModel.BudgetLineItem" />
+          <AssociationSet Name="FK_BudgetLineItems_BudgetHeaders" Association="MoneyManagerModel.FK_BudgetLineItems_BudgetHeaders">
+            <End Role="BudgetHeader" EntitySet="BudgetHeaders" />
+            <End Role="BudgetLineItem" EntitySet="BudgetLineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetLineItems_Categories" Association="MoneyManagerModel.FK_BudgetLineItems_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="BudgetLineItem" EntitySet="BudgetLineItems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BudgetLineItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BudgetHeaderId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="BudgetHeader" Relationship="MoneyManagerModel.FK_BudgetLineItems_BudgetHeaders" FromRole="BudgetLineItem" ToRole="BudgetHeader" />
+          <NavigationProperty Name="Category" Relationship="MoneyManagerModel.FK_BudgetLineItems_Categories" FromRole="BudgetLineItem" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_BudgetLineItems_BudgetHeaders">
+          <End Type="MoneyManagerModel.BudgetHeader" Role="BudgetHeader" Multiplicity="1" />
+          <End Type="MoneyManagerModel.BudgetLineItem" Role="BudgetLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BudgetHeader">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BudgetLineItem">
+              <PropertyRef Name="BudgetHeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetLineItems_Categories">
+          <End Type="MoneyManagerModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="MoneyManagerModel.BudgetLineItem" Role="BudgetLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BudgetLineItem">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MoneyManagerModelStoreContainer" CdmEntityContainer="MoneyManagerEntities">
+          <EntitySetMapping Name="BudgetHeaders">
+            <EntityTypeMapping TypeName="MoneyManagerModel.BudgetHeader">
+              <MappingFragment StoreEntitySet="BudgetHeaders">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MoneyManagerModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditCardTransactions">
+            <EntityTypeMapping TypeName="MoneyManagerModel.CreditCardTransaction">
+              <MappingFragment StoreEntitySet="CreditCardTransactions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="RegisterLineItemID" ColumnName="RegisterLineItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegisterLineItemDetails">
+            <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItemDetail">
+              <MappingFragment StoreEntitySet="RegisterLineItemDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LineItemID" ColumnName="LineItemID" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegisterLineItems">
+            <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItem">
+              <MappingFragment StoreEntitySet="RegisterLineItems">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="IsCleared" ColumnName="IsCleared" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BudgetLineItems">
+            <EntityTypeMapping TypeName="MoneyManagerModel.BudgetLineItem">
+              <MappingFragment StoreEntitySet="BudgetLineItems">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="BudgetHeaderId" ColumnName="BudgetHeaderId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

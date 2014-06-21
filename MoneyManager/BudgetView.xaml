@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="MoneyManager.BudgetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:MoneyManager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>   
+        <GroupBox Header="Date">
+            <ComboBox HorizontalAlignment="Left" Width="150" SelectedItem="{Binding SelectedDate}" ItemsSource="{Binding Dates}" DisplayMemberPath="Display"/>
+        </GroupBox>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+        <GroupBox Header="Budget Items" >
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="3">
+                    <TextBlock Width="150" Text="Category"/>
+                    <TextBlock Width="150" Text="Amount"/>
+                    <TextBlock Width="150" Text="Note"/>
+                </StackPanel>
+                
+                <ItemsControl ItemsSource="{Binding BudgetLineItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                
+                                    <controls:EnterAsTabAutoComplete  
+                                         
+                                     Height="26"
+                                     Width="150"
+                                     Padding="2,2,2,-1"
+                                     FontWeight="Normal"                                         
+                                     FilterMode="Contains"                                     
+                                     MaxDropDownHeight="250"                                     
+                                     ValueMemberBinding="{Binding Name}"
+                                     MinimumPrefixLength="0"
+                                     HorizontalAlignment="Left"  VerticalAlignment="Top" 
+                                     Margin="0,0,10,0"
+                                     Text="{Binding Category}"
+                                      IgnoreSendTab="true"
+                                     IsDropDownOpen="True" 
+                                     IsTextCompletionEnabled="True"
+                                     ItemsSource="{Binding Categories}"
+                                     SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     controls:AutoCompleteBoxBehavior.IsSelectedItemScrolledIntoView="True" LostFocus="EnterAsTabAutoComplete_LostFocus">
+
+                                        <!--<controls:EnterAsTabAutoComplete.ItemTemplate>
+                                            <DataTemplate>
+                                                <controls:HighlightTextBlock FontWeight="Normal"
+                                                        Text="{Binding Name}"                                                        
+                                                        HighlightBrush="{x:Static SystemColors.ControlTextBrush}"
+                                                        HighlightFontWeight="Bold"
+                                                        HighlightText="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:EnterAsTabAutoComplete}},Path=SearchText}" />
+                                            </DataTemplate>
+                                        </controls:EnterAsTabAutoComplete.ItemTemplate>-->
+                                        </controls:EnterAsTabAutoComplete> 
+                                        <TextBox Width="150" Text="{Binding AmountString}"/>
+                                <TextBox Width="150" Text="{Binding Description}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </StackPanel>
+        </GroupBox>
+        </ScrollViewer>
+        
+        <StackPanel Grid.Column="1">
+            <TextBlock FontWeight="Bold" Text="Net Total"/>
+            <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
