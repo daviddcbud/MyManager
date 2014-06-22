@@ -43,7 +43,8 @@ namespace MoneyManager
             {
                 var newItem = container.Resolve<BudgetItemVM>();
                 newItem.Id = item.ID;
-                
+                if(item.IsSavings.HasValue)  newItem.IsSavings = item.IsSavings.Value;
+                newItem.Description = item.Description;
                 newItem.Amount = item.Amount;
                 newItem.AmountString = item.Amount.ToString("N2");
                 newItem.Categories = Categories;
@@ -65,11 +66,14 @@ namespace MoneyManager
 
         }
 
-        
+
+        public decimal SavingsTotal { get; set; }
         void ComputeTotal()
         {
             Total = BudgetLineItems.Sum(x => x.Amount);
+            SavingsTotal = BudgetLineItems.Where(x => x.IsSavings).Sum(x => x.Amount);
             OnPropertyChanged(() => Total);
+            OnPropertyChanged(() => SavingsTotal);
             if (Loading) return;
             foreach (var item in BudgetLineItems.Where(x=>x.IsDirty))
             {
@@ -90,6 +94,7 @@ namespace MoneyManager
                     continue;
                 }
                 if (item.Category == null) continue;
+                findIt.IsSavings = item.IsSavings;
                 findIt.CategoryId = item.Category.ID;
                 findIt.Amount = item.Amount;
                 findIt.Description = item.Description;

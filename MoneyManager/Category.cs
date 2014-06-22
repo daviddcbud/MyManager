@@ -16,18 +16,18 @@ namespace MoneyManager
     {
         public Category()
         {
-            this.CreditCardTransactions = new HashSet<CreditCardTransaction>();
-            this.RegisterLineItemDetails = new HashSet<RegisterLineItemDetail>();
             this.RegisterLineItems = new HashSet<RegisterLineItem>();
             this.BudgetLineItems = new HashSet<BudgetLineItem>();
+            this.CreditCardTransactions = new HashSet<CreditCardTransaction>();
+            this.RegisterLineItemDetails = new HashSet<RegisterLineItemDetail>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<CreditCardTransaction> CreditCardTransactions { get; set; }
-        public virtual ICollection<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
         public virtual ICollection<RegisterLineItem> RegisterLineItems { get; set; }
         public virtual ICollection<BudgetLineItem> BudgetLineItems { get; set; }
+        public virtual ICollection<CreditCardTransaction> CreditCardTransactions { get; set; }
+        public virtual ICollection<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
     }
 }

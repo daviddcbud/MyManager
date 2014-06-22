@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="MoneyManager.CCTransView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:controls="clr-namespace:MoneyManager.Controls"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox>
+            <Button HorizontalAlignment="Left" Height="25" Command="{Binding PayCommand}" Content="Pay"/>
+        </GroupBox>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+            <GroupBox Header="Budget Items" >
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Width="100" Text="Date" Margin="0,0,2,0"/>
+                        <TextBlock Width="150" Text="Description" Margin="0,0,2,0"/>
+                        <TextBlock Width="150" Text="Category" Margin="0,0,2,0"/>
+                        <TextBlock Width="75" Text="Amount" Margin="0,0,2,0"/>
+                        
+                    </StackPanel>
+                    
+                    <ItemsControl ItemsSource="{Binding LineItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="3">
+                                    <DatePickerTextBox Margin="0,0,2,0" HorizontalAlignment="Left" Width="100" Text="{Binding Date,StringFormat=d}"/>
+                                    <TextBox Width="150" Text="{Binding Description}" Margin="0,0,2,0"/>
+                                    <controls:EnterAsTabAutoComplete  
+                                         
+                                     Height="26"
+                                     Width="150"
+                                     Padding="2,2,2,-1"
+                                     FontWeight="Normal"                                         
+                                     FilterMode="Contains"                                     
+                                     MaxDropDownHeight="250"                                     
+                                     ValueMemberBinding="{Binding Name}"
+                                     MinimumPrefixLength="0"
+                                     HorizontalAlignment="Left"  VerticalAlignment="Top" 
+                                      Margin="0,0,2,0"
+                                     Text="{Binding Category}"
+                                      IgnoreSendTab="true"
+                                     IsDropDownOpen="True" 
+                                     IsTextCompletionEnabled="True"
+                                     ItemsSource="{Binding Categories}"
+                                     SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     controls:AutoCompleteBoxBehavior.IsSelectedItemScrolledIntoView="True" LostFocus="EnterAsTabAutoComplete_LostFocus">
+
+                                        
+                                    </controls:EnterAsTabAutoComplete>
+                                    <TextBox Width="75" Text="{Binding AmountString}"  Margin="0,0,2,0"/>
+                                    <CheckBox Content="Pay" IsChecked="{Binding IsPaid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                   
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </GroupBox>
+        </ScrollViewer>
+
+        <StackPanel Grid.Column="1">
+            <TextBlock FontWeight="Bold" Text="Total"/>
+            <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}"/>
+            <TextBlock FontWeight="Bold" Text="Pay Total"/>
+            <TextBlock FontWeight="Bold" Text="{Binding TotalToPay,StringFormat=N2}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

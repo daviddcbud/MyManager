@@ -18,27 +18,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CreditCardTransactions">
-      <EntityTypeMapping TypeName="MoneyManagerModel.CreditCardTransaction">
-        <MappingFragment StoreEntitySet="CreditCardTransactions">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="RegisterLineItemID" ColumnName="RegisterLineItemID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RegisterLineItemDetails">
-      <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItemDetail">
-        <MappingFragment StoreEntitySet="RegisterLineItemDetails">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="LineItemID" ColumnName="LineItemID" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RegisterLineItems">
       <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItem">
         <MappingFragment StoreEntitySet="RegisterLineItems">
@@ -55,6 +34,7 @@
     <EntitySetMapping Name="BudgetLineItems">
       <EntityTypeMapping TypeName="MoneyManagerModel.BudgetLineItem">
         <MappingFragment StoreEntitySet="BudgetLineItems">
+          <ScalarProperty Name="IsSavings" ColumnName="IsSavings" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
@@ -63,5 +43,37 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_BalanceAsOf" FunctionName="MoneyManagerModel.Store.sp_BalanceAsOf" />
+    <EntitySetMapping Name="CreditCardTransactions">
+      <EntityTypeMapping TypeName="MoneyManagerModel.CreditCardTransaction">
+        <MappingFragment StoreEntitySet="CreditCardTransactions">
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisterLineItemDetails">
+      <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItemDetail">
+        <MappingFragment StoreEntitySet="RegisterLineItemDetails">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="LineItemID" ColumnName="LineItemID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_Analysis" FunctionName="MoneyManagerModel.Store.sp_Analysis">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MoneyManagerModel.AnalysisItemType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+          <ScalarProperty Name="BudgetAmount" ColumnName="BudgetAmount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

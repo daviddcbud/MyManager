@@ -16,7 +16,6 @@ namespace MoneyManager
     {
         public RegisterLineItem()
         {
-            this.CreditCardTransactions = new HashSet<CreditCardTransaction>();
             this.RegisterLineItemDetails = new HashSet<RegisterLineItemDetail>();
         }
     
@@ -29,7 +28,6 @@ namespace MoneyManager
         public bool IsCleared { get; set; }
     
         public virtual Category Category { get; set; }
-        public virtual ICollection<CreditCardTransaction> CreditCardTransactions { get; set; }
         public virtual ICollection<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
     }
 }

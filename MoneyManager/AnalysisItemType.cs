@@ -10,18 +10,11 @@
 namespace MoneyManager
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BudgetLineItem
+    public partial class AnalysisItemType
     {
-        public int ID { get; set; }
-        public int BudgetHeaderId { get; set; }
-        public int CategoryId { get; set; }
-        public string Description { get; set; }
-        public decimal Amount { get; set; }
-        public Nullable<bool> IsSavings { get; set; }
-    
-        public virtual BudgetHeader BudgetHeader { get; set; }
-        public virtual Category Category { get; set; }
+        public string Name { get; set; }
+        public decimal ActualAmount { get; set; }
+        public decimal BudgetAmount { get; set; }
     }
 }

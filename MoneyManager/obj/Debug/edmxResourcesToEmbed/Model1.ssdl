@@ -17,6 +17,7 @@
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsSavings" Type="bit" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>
@@ -33,7 +34,8 @@
     <Property Name="Date" Type="date" Nullable="false" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="RegisterLineItemID" Type="int" Nullable="false" />
+    <Property Name="Paid" Type="bit" Nullable="false" />
+    <Property Name="Notes" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
   <EntityType Name="RegisterLineItemDetails">
     <Key>
@@ -92,18 +94,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_CreditCardTransactions_RegisterLineItems">
-    <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="1" />
-    <End Role="CreditCardTransactions" Type="Self.CreditCardTransactions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RegisterLineItems">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CreditCardTransactions">
-        <PropertyRef Name="RegisterLineItemID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_RegisterLineItemDetails_Categories">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
     <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetails" Multiplicity="*" />
@@ -117,7 +107,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RegisterLineItemDetails_RegisterLineItems">
-    <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="1" />
+    <End Role="RegisterLineItems" Type="Self.RegisterLineItems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="RegisterLineItemDetails" Type="Self.RegisterLineItemDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RegisterLineItems">
@@ -140,6 +132,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_Analysis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fromDate" Type="date" Mode="In" />
+    <Parameter Name="toDate" Type="date" Mode="In" />
+  </Function>
+  <Function Name="sp_BalanceAsOf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
   <EntityContainer Name="MoneyManagerModelStoreContainer">
     <EntitySet Name="BudgetHeaders" EntityType="Self.BudgetHeaders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BudgetLineItems" EntityType="Self.BudgetLineItems" Schema="dbo" store:Type="Tables" />
@@ -157,10 +156,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_CreditCardTransactions_Categories" Association="Self.FK_CreditCardTransactions_Categories">
       <End Role="Categories" EntitySet="Categories" />
-      <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CreditCardTransactions_RegisterLineItems" Association="Self.FK_CreditCardTransactions_RegisterLineItems">
-      <End Role="RegisterLineItems" EntitySet="RegisterLineItems" />
       <End Role="CreditCardTransactions" EntitySet="CreditCardTransactions" />
     </AssociationSet>
     <AssociationSet Name="FK_RegisterLineItemDetails_Categories" Association="Self.FK_RegisterLineItemDetails_Categories">

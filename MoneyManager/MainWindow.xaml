@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MoneyManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" WindowState="Maximized" >
+        Title="Money Manager" Height="350" Width="525" WindowState="Maximized" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -11,8 +11,9 @@
     <Menu>
          
         <MenuItem Header="Budget" Click="MenuItem_Click"    />
-        <MenuItem Header="Enter CC Transactions"/>
-        <MenuItem Header="Register"/>
+        <MenuItem Header="Credit Card" Click="MenuItem_Click_2"/>
+        <MenuItem Header="Register" Click="MenuItem_Click_1"/>
+          <MenuItem Header="Analysis" Click="MenuItem_Click_3"/>
 
         </Menu>
         <TabControl Grid.Row="1" x:Name="tabs">

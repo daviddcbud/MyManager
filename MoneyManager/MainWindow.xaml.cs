@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +23,52 @@ namespace MoneyManager
     public partial class MainWindow : Window
     {
         IUnityContainer container;
-        public MainWindow(IUnityContainer container)
+        IEventAggregator events;
+        public MainWindow(IUnityContainer container,IEventAggregator events)
         {
             this.container = container;
             InitializeComponent();
+            events.GetEvent<CloseTabEvent>().Subscribe((x) => tabs.Items.Remove(tabs.SelectedItem));
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             var vc = container.Resolve<BudgetView>();
-            tabs.Items.Add(vc);
+            var tabItem = new TabItem();
+            tabItem.Header = "Budget";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            var vc = container.Resolve<RegisterView>();
+            var tabItem = new TabItem();
+            tabItem.Header = "Register";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            var vc = container.Resolve<CCTransView>();
+            var tabItem = new TabItem();
+            tabItem.Header = "Credit Card";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            var vc = container.Resolve<AnalysisView>();
+            var tabItem = new TabItem();
+            tabItem.Header = "Analysis";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
             tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
         }
     }

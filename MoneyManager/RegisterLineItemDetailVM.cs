@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Collections.Generic;
@@ -9,31 +8,13 @@ using System.Threading.Tasks;
 
 namespace MoneyManager
 {
-    public class BudgetAmountChanged : CompositePresentationEvent<object>
+    public class RegisterLineItemDetailVM : BindableBase
     {
-    }
-    
-    public class BudgetItemVM:BindableBase
-    {
+
         public bool IsDirty { get; set; }
         public int Id { get; set; }
         decimal amount = 0;
         string amountString = "";
-        bool isSavings = false;
-        public bool IsSavings
-        {
-            get
-            {
-                return isSavings;
-            }
-            set
-            {
-
-                if (isSavings != value) IsDirty = true;
-                SetProperty(ref this.isSavings, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
-            }
-        }
         public string AmountString
         {
             get
@@ -60,7 +41,22 @@ namespace MoneyManager
             {
                 if (amount != value) IsDirty = true;
                 SetProperty(ref this.amount, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                events.GetEvent<RegisterLineUpdated>().Publish(null);
+            }
+        }
+        string description = "";
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+            set
+            {
+
+                if (description != value) IsDirty = true;
+                SetProperty(ref this.description, value);
+                events.GetEvent<RegisterLineUpdated>().Publish(null);
             }
         }
         Category category;
@@ -78,33 +74,20 @@ namespace MoneyManager
                 if (value != null) newName = value.Name;
                 if (oldName != newName) IsDirty = true;
                 SetProperty(ref this.category, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                events.GetEvent<RegisterAmountChanged>().Publish(null);
             }
         }
-        string description = "";
-        public string Description
-        {
-            get
-            {
-                return description;
-            }
-            set
-            {
 
-                if (description != value) IsDirty = true;
-                SetProperty(ref this.description, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
-            }
-        }
         public List<Category> Categories { get; set; }
         public List<string> CategoryNames { get; set; }
         public string CategoryName { get; set; }
         IEventAggregator events;
-        public BudgetItemVM(IEventAggregator events)
+        public RegisterLineItemDetailVM(IEventAggregator events)
         {
             this.events = events;
             Categories = new List<Category>();
             CategoryNames = new List<string>();
+
         }
     }
 }

@@ -12,6 +12,8 @@ namespace MoneyManager
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class MoneyManagerEntities : DbContext
     {
@@ -27,9 +29,31 @@ namespace MoneyManager
     
         public virtual DbSet<BudgetHeader> BudgetHeaders { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<CreditCardTransaction> CreditCardTransactions { get; set; }
-        public virtual DbSet<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
         public virtual DbSet<RegisterLineItem> RegisterLineItems { get; set; }
         public virtual DbSet<BudgetLineItem> BudgetLineItems { get; set; }
+        public virtual DbSet<CreditCardTransaction> CreditCardTransactions { get; set; }
+        public virtual DbSet<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_BalanceAsOf(Nullable<System.DateTime> date)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_BalanceAsOf", dateParameter);
+        }
+    
+        public virtual ObjectResult<AnalysisItemType> sp_Analysis(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AnalysisItemType>("sp_Analysis", fromDateParameter, toDateParameter);
+        }
     }
 }

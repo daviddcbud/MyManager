@@ -18,9 +18,9 @@ namespace MoneyManager
         public System.DateTime Date { get; set; }
         public int CategoryId { get; set; }
         public decimal Amount { get; set; }
-        public int RegisterLineItemID { get; set; }
+        public bool Paid { get; set; }
+        public string Notes { get; set; }
     
         public virtual Category Category { get; set; }
-        public virtual RegisterLineItem RegisterLineItem { get; set; }
     }
 }

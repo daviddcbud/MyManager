@@ -65,7 +65,8 @@
                                         </controls:EnterAsTabAutoComplete> 
                                         <TextBox Width="150" Text="{Binding AmountString}"/>
                                 <TextBox Width="150" Text="{Binding Description}"/>
-                            </StackPanel>
+                                    <CheckBox IsChecked="{Binding IsSavings}" Content="Savings?"/>
+                                </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -75,8 +76,12 @@
         </ScrollViewer>
         
         <StackPanel Grid.Column="1">
-            <TextBlock FontWeight="Bold" Text="Net Total"/>
+            <StackPanel Orientation="Horizontal">
+            <TextBlock FontWeight="Bold" Text="Net Total:"/>
             <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}"/>
+            <TextBlock FontWeight="Bold" Text="Savings To Transfer:" Margin="10,0,0,0"/>
+            <TextBlock FontWeight="Bold" Text="{Binding SavingsTotal,StringFormat=N2}"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

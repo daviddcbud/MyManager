@@ -5,33 +5,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MoneyManager
 {
-    public class BudgetAmountChanged : CompositePresentationEvent<object>
+    public class CCAmountChanged : CompositePresentationEvent<object>
     {
     }
-    
-    public class BudgetItemVM:BindableBase
+
+    public class CCItemVM : BindableBase
     {
         public bool IsDirty { get; set; }
         public int Id { get; set; }
         decimal amount = 0;
         string amountString = "";
-        bool isSavings = false;
-        public bool IsSavings
+        DateTime? date;
+        public DateTime? Date
         {
             get
             {
-                return isSavings;
+                return date;
             }
             set
             {
 
-                if (isSavings != value) IsDirty = true;
-                SetProperty(ref this.isSavings, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                if (date != value) IsDirty = true;
+                SetProperty(ref this.date, value);
+                events.GetEvent<CCAmountChanged>().Publish(null);
             }
         }
         public string AmountString
@@ -60,7 +59,7 @@ namespace MoneyManager
             {
                 if (amount != value) IsDirty = true;
                 SetProperty(ref this.amount, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                events.GetEvent<CCAmountChanged>().Publish(null);
             }
         }
         Category category;
@@ -78,7 +77,7 @@ namespace MoneyManager
                 if (value != null) newName = value.Name;
                 if (oldName != newName) IsDirty = true;
                 SetProperty(ref this.category, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                events.GetEvent<CCAmountChanged>().Publish(null);
             }
         }
         string description = "";
@@ -93,18 +92,34 @@ namespace MoneyManager
 
                 if (description != value) IsDirty = true;
                 SetProperty(ref this.description, value);
-                events.GetEvent<BudgetAmountChanged>().Publish(null);
+                events.GetEvent<CCAmountChanged>().Publish(null);
             }
         }
         public List<Category> Categories { get; set; }
         public List<string> CategoryNames { get; set; }
         public string CategoryName { get; set; }
         IEventAggregator events;
-        public BudgetItemVM(IEventAggregator events)
+        public CCItemVM(IEventAggregator events)
         {
             this.events = events;
             Categories = new List<Category>();
             CategoryNames = new List<string>();
+        }
+
+        bool isPaid = false;
+        public bool IsPaid
+        {
+            get
+            {
+                return isPaid;
+            }
+            set
+            {
+
+                if (isPaid != value) IsDirty = true;
+                SetProperty(ref this.isPaid, value);
+                events.GetEvent<CCAmountChanged>().Publish(null);
+            }
         }
     }
 }
