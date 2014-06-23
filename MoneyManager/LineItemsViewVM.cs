@@ -38,6 +38,7 @@ namespace MoneyManager
             {
                 var newItem = container.Resolve<RegisterLineItemDetailVM>();
                 newItem.Id = item.ID;
+                newItem.Note = item.Note;
                 newItem.Amount = item.Amount;
                 newItem.AmountString = item.Amount.ToString("N2");
                 newItem.Categories = Categories;
@@ -91,7 +92,7 @@ namespace MoneyManager
                 if (item.Category == null) continue;
                 findIt.CategoryId = item.Category.ID;
                 findIt.Amount = item.Amount;
-
+                findIt.Note = item.Note;
                 findIt.LineItemID = this.Id;
                 try
                 {

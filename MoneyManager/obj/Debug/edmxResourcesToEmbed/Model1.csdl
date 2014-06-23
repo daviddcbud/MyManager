@@ -156,6 +156,7 @@
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <NavigationProperty Name="Category" Relationship="MoneyManagerModel.FK_RegisterLineItemDetails_Categories" FromRole="RegisterLineItemDetail" ToRole="Category" />
     <NavigationProperty Name="RegisterLineItem" Relationship="MoneyManagerModel.FK_RegisterLineItemDetails_RegisterLineItems" FromRole="RegisterLineItemDetail" ToRole="RegisterLineItem" />
+    <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_RegisterLineItemDetails_Categories">
     <End Type="MoneyManagerModel.Category" Role="Category" Multiplicity="1" />

@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Unity;
 using System;
@@ -56,6 +57,7 @@ namespace MoneyManager
                 if (!Loading) LoadData();
             }
         }
+        public DelegateCommand CloseCommand { get; set; }
         public AnalysisViewVM(IEventAggregator events, IUnityContainer container)
         {
             this.events = events;
@@ -69,7 +71,7 @@ namespace MoneyManager
             nextMonth = nextMonth.AddDays(-1);
             LoadData();
             Loading = false;
-             
+            CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
              
         }
         void LoadData()

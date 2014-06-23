@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Unity;
 using System;
@@ -107,6 +108,7 @@ namespace MoneyManager
         }
         IEventAggregator events;
         IUnityContainer container;
+        public DelegateCommand CloseCommand { get; set; }
         public  BudgetVM(IEventAggregator events,IUnityContainer container)
         {
             this.events = events;
@@ -115,7 +117,7 @@ namespace MoneyManager
             LoadCategories();
             LoadDates();
             events.GetEvent<BudgetAmountChanged>().Subscribe((x) => ComputeTotal());
-             
+            CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
              
         }
         void LoadDates()

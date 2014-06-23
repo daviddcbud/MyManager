@@ -135,7 +135,7 @@ namespace MoneyManager
                 var detail = new RegisterLineItemDetail();
                 detail.Amount = item.Amount;
                 detail.CategoryId = item.Category.ID;
-                
+                detail.Note = item.Description;
                 newItem.RegisterLineItemDetails.Add(detail);
                 var trans = model.CreditCardTransactions.Where(x => x.ID == item.Id).Single();
                 trans.Paid = true;

@@ -45,6 +45,7 @@
     <Property Name="LineItemID" Type="int" Nullable="false" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Note" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="RegisterLineItems">
     <Key>

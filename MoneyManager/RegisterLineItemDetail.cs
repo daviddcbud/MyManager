@@ -18,6 +18,7 @@ namespace MoneyManager
         public int LineItemID { get; set; }
         public int CategoryId { get; set; }
         public decimal Amount { get; set; }
+        public string Note { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual RegisterLineItem RegisterLineItem { get; set; }

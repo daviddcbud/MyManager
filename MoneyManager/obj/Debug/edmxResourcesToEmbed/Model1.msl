@@ -59,6 +59,7 @@
     <EntitySetMapping Name="RegisterLineItemDetails">
       <EntityTypeMapping TypeName="MoneyManagerModel.RegisterLineItemDetail">
         <MappingFragment StoreEntitySet="RegisterLineItemDetails">
+          <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="LineItemID" ColumnName="LineItemID" />

@@ -89,5 +89,21 @@ namespace MoneyManager
             CategoryNames = new List<string>();
 
         }
+
+        string note = "";
+        public string Note
+        {
+            get
+            {
+                return note;
+            }
+            set
+            {
+
+                if (note != value) IsDirty = true;
+                SetProperty(ref this.note, value);
+                events.GetEvent<RegisterLineUpdated>().Publish(null);
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@
                         
                         <TextBlock Width="150" Text="Category" Margin="0,0,2,0"/>
                         <TextBlock Width="75" Text="Amount" Margin="0,0,2,0"/>
+                        <TextBlock Width="150" Text="Note" Margin="0,0,2,0"/>
 
 
                     </StackPanel>
@@ -53,6 +54,7 @@
 
                                     </controls:EnterAsTabAutoComplete>
                                     <TextBox Margin="0,0,2,0" Width="75" Text="{Binding AmountString}"/>
+                                    <TextBox Margin="0,0,2,0" Width="150" Text="{Binding Note}"/>
                                      
                                 </StackPanel>
                             </DataTemplate>

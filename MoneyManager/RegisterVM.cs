@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Events;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Unity;
@@ -152,6 +153,7 @@ namespace MoneyManager
         }
         IEventAggregator events;
         IUnityContainer container;
+        public DelegateCommand CloseCommand { get; set; }
         public RegisterVM(IEventAggregator events, IUnityContainer container)
         {
             this.events = events;
@@ -159,7 +161,7 @@ namespace MoneyManager
             model = DAL.GetModel();
             Loading = true;
             LoadCategories();
-             
+            CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
             events.GetEvent<RegisterAmountChanged>().Subscribe((x) => ComputeTotal());
             events.GetEvent<RegisterLineAmountChanged>().Subscribe((x) => UpdateAmount(x));
             events.GetEvent<DetailsSaveMe>().Subscribe((x) => SaveLineItem(x));
