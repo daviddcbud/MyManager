@@ -134,14 +134,8 @@ namespace MoneyManager
         }
         void LoadCategories()
         {
-             
-            Categories = new List<Category>();
-            var list = model.Categories.OrderBy(x => x.Name).ToList();
-            foreach (var item in list)
-            {
-                Categories.Add(item);
-                 
-            }
+
+            Categories = DAL.Categories;
         }
     }
 }

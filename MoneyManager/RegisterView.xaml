@@ -23,6 +23,7 @@
                 <DatePickerTextBox Margin="0,0,2,0" HorizontalAlignment="Left" Width="100" Text="{Binding StartDate,StringFormat=d}"/>
                 <TextBlock Margin="0,0,2,0" FontWeight="Bold" Text="To"/>
                 <DatePickerTextBox HorizontalAlignment="Left" Margin="0,0,2,0" Width="100" Text="{Binding EndDate,StringFormat=d}"/>
+                 
             </StackPanel>
         </GroupBox>
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
@@ -80,6 +81,9 @@
             <StackPanel Orientation="Horizontal">
             <TextBlock FontWeight="Bold" Text="Bank Balance:"/>
             <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}" Margin="10,0,0,0"/>
+                <TextBlock FontWeight="Bold" Text="Balance After Cleared Items:" Margin="10,0,0,0"/>
+            <TextBlock FontWeight="Bold" Text="{Binding RealTotal,StringFormat=N2}" Margin="10,0,0,0"/>
+                 
             </StackPanel>
         </StackPanel>
     </Grid>

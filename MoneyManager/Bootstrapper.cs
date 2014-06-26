@@ -26,7 +26,7 @@ namespace MoneyManager
 
             
 
-
+            
             return Container.Resolve<MainWindow>();
         }
 
@@ -40,7 +40,7 @@ namespace MoneyManager
         {
             base.InitializeShell();
             App.Current.MainWindow = (Window)Shell;
-
+            var cats = DAL.Categories;
             App.Current.MainWindow.Show();
         }
     }

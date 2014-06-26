@@ -82,15 +82,16 @@ namespace MoneyManager
             Loading = false;
 
         }
-
+        public decimal RealTotal { get; set; }
         void ComputeTotal()
         {
             var beginTotal = model.sp_BalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault() ;
             decimal begin = 0;
             if (beginTotal != null) begin = beginTotal.Value;
             Total = begin + LineItems.Where(x=>x.IsCleared==true).Sum(x => x.Amount);
-
+            RealTotal = begin + LineItems.Sum(x => x.Amount);
             OnPropertyChanged(() => Total);
+            OnPropertyChanged(() => RealTotal);
             if (Loading) return;
 
             foreach (var item in LineItems.Where(x => x.IsDirty))
@@ -202,13 +203,7 @@ namespace MoneyManager
         void LoadCategories()
         {
 
-            Categories = new List<Category>();
-            var list = model.Categories.OrderBy(x => x.Name).ToList();
-            foreach (var item in list)
-            {
-                Categories.Add(item);
-
-            }
+            Categories = DAL.Categories;
         }
     }
 }

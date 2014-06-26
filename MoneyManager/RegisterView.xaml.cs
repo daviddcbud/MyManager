@@ -48,6 +48,7 @@ namespace MoneyManager
         {
             var bx = sender as EnterAsTabAutoComplete;
             var vm = bx.DataContext as RegisterItem;
+            if (vm == null) return;
             vm.Category = vm.Categories.Where(x => x.Name == bx.Text).FirstOrDefault();
         }
     }

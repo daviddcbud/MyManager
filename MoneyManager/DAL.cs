@@ -13,6 +13,18 @@ namespace MoneyManager
         {
             return model;
         }
+      static List<Category> categories;
+      public static List<Category> Categories
+      {
+          get
+          {
+              if (categories == null)
+              {
+                  categories = model.Categories.OrderBy(x => x.Name).ToList();
+              }
+              return categories;
+          }
+      }
         
     }
 }

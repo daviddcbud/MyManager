@@ -13,8 +13,8 @@
         <MenuItem Header="Budget" Click="MenuItem_Click"    />
         <MenuItem Header="Credit Card" Click="MenuItem_Click_2"/>
         <MenuItem Header="Register" Click="MenuItem_Click_1"/>
-          <MenuItem Header="Analysis" Click="MenuItem_Click_3"/>
-
+        <MenuItem Header="Analysis" Click="MenuItem_Click_3"/>
+          
         </Menu>
         <TabControl Grid.Row="1" x:Name="tabs">
             
