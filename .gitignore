@@ -1,3 +1,5 @@
 MoneyManager/obj/Debug/*.*
 *.user
+MoneyManager/bin/*.*
+MoneyManager/bin/Debug/*.*
 

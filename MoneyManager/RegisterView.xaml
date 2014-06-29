@@ -81,7 +81,7 @@
             <StackPanel Orientation="Horizontal">
             <TextBlock FontWeight="Bold" Text="Bank Balance:"/>
             <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}" Margin="10,0,0,0"/>
-                <TextBlock FontWeight="Bold" Text="Balance After Cleared Items:" Margin="10,0,0,0"/>
+                <TextBlock FontWeight="Bold" Text="Real Cash Balance:" Margin="10,0,0,0"/>
             <TextBlock FontWeight="Bold" Text="{Binding RealTotal,StringFormat=N2}" Margin="10,0,0,0"/>
                  
             </StackPanel>

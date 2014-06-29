@@ -90,6 +90,10 @@ namespace MoneyManager
             if (beginTotal != null) begin = beginTotal.Value;
             Total = begin + LineItems.Where(x=>x.IsCleared==true).Sum(x => x.Amount);
             RealTotal = begin + LineItems.Sum(x => x.Amount);
+            var cc = model.CreditCardTransactions.Where(x => x.Paid == false).Sum(x => x.Amount);
+            RealTotal += cc;
+            RealTotal *= -1;
+            Total *= -1;
             OnPropertyChanged(() => Total);
             OnPropertyChanged(() => RealTotal);
             if (Loading) return;
