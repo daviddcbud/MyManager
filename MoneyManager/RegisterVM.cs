@@ -108,7 +108,7 @@ namespace MoneyManager
                      
                     model.RegisterLineItems.Add(findIt);
                 }
-                if (item.Category == null && findIt != null && findIt.Amount==0)
+                if (item.Category == null && findIt != null && item.Amount==0)
                 {
                     item.Id = 0;
                     
