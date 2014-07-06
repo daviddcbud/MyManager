@@ -71,5 +71,20 @@ namespace MoneyManager
             tabs.Items.Add(tabItem);
             tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
         }
+
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            var vm = container.Resolve<LoginsView>();
+            var pass = new PasswordWindow();
+            pass.ShowDialog();
+            vm.Load(pass.Password);
+
+            var tabItem = new TabItem();
+            tabItem.Header = "Logins";
+            tabItem.Content = vm;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+
+        }
     }
 }

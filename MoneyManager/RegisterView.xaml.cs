@@ -51,5 +51,10 @@ namespace MoneyManager
             if (vm == null) return;
             vm.Category = vm.Categories.Where(x => x.Name == bx.Text).FirstOrDefault();
         }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

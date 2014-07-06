@@ -68,7 +68,8 @@ namespace MoneyManager
             StartDate = DateTime.Parse(DateTime.Today.Month + "/1/" + DateTime.Today.Year);
             var nextMonth = DateTime.Now.AddMonths(1);
             EndDate = DateTime.Parse(nextMonth.Month + "/1/" + nextMonth.Year);
-            nextMonth = nextMonth.AddDays(-1);
+            EndDate = EndDate.AddDays(-1);
+             
             LoadData();
             Loading = false;
             CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));

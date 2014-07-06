@@ -63,3 +63,7 @@ C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\o
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\CCTransView.g.cs
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\AnalysisView.baml
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\AnalysisView.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\LoginsView.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\PasswordWindow.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\LoginsView.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\PasswordWindow.g.cs

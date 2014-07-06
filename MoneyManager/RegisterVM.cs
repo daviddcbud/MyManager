@@ -52,21 +52,7 @@ namespace MoneyManager
             var list = model.RegisterLineItems.Include("Category").Where(x => x.Date >= StartDate && x.Date <= EndDate).OrderBy(x=>x.Date).ToList();
             foreach (var item in list)
             {
-                var newItem = container.Resolve<RegisterItem>();
-                newItem.Id = item.ID;
-                newItem.Description=item.Description;
-                newItem.Amount = item.Amount;
-                newItem.Date = item.Date;
-                newItem.AmountString = item.Amount.ToString("N2");
-                newItem.Categories = Categories;
-                if (item.CategoryId.HasValue)
-                {
-                    newItem.Category = Categories.Where(x => x.ID == item.CategoryId).Single();
-                    newItem.CategoryName = newItem.Category.Name;
-                }
-                newItem.IsDirty = false;
-                newItem.IsCleared = item.IsCleared;
-                LineItems.Add(newItem);
+                LoadRegisterItem(item);
             }
             for (int i = 1; i <= 2; i++)
             {
@@ -81,6 +67,25 @@ namespace MoneyManager
             ComputeTotal();
             Loading = false;
 
+        }
+
+        private void LoadRegisterItem(RegisterLineItem item)
+        {
+            var newItem = container.Resolve<RegisterItem>();
+            newItem.Id = item.ID;
+            newItem.Description = item.Description;
+            newItem.Amount = item.Amount;
+            newItem.Date = item.Date;
+            newItem.AmountString = item.Amount.ToString("N2");
+            newItem.Categories = Categories;
+            if (item.CategoryId.HasValue)
+            {
+                newItem.Category = Categories.Where(x => x.ID == item.CategoryId).Single();
+                newItem.CategoryName = newItem.Category.Name;
+            }
+            newItem.IsDirty = false;
+            newItem.IsCleared = item.IsCleared;
+            LineItems.Add(newItem);
         }
         public decimal RealTotal { get; set; }
         void ComputeTotal()
@@ -159,6 +164,8 @@ namespace MoneyManager
         IEventAggregator events;
         IUnityContainer container;
         public DelegateCommand CloseCommand { get; set; }
+        public DelegateCommand SearchCommand { get; set; }
+        public string SearchText { get; set; }
         public RegisterVM(IEventAggregator events, IUnityContainer container)
         {
             this.events = events;
@@ -167,6 +174,7 @@ namespace MoneyManager
             Loading = true;
             LoadCategories();
             CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
+            SearchCommand = new DelegateCommand(() => Search());
             events.GetEvent<RegisterAmountChanged>().Subscribe((x) => ComputeTotal());
             events.GetEvent<RegisterLineAmountChanged>().Subscribe((x) => UpdateAmount(x));
             events.GetEvent<DetailsSaveMe>().Subscribe((x) => SaveLineItem(x));
@@ -174,6 +182,40 @@ namespace MoneyManager
             EndDate = DateTime.Today;
             LoadData();
             Loading = false;
+        }
+        void Search()
+        {
+            if (SearchText != "")
+            {
+                decimal amount = 0;
+                if (decimal.TryParse(SearchText, out amount))
+                {
+                     amount = decimal.Parse(SearchText);
+                    var query = model.RegisterLineItems.Include("Category").Where(x => x.Amount == amount).ToList();
+                    LineItems.Clear();
+                    foreach (var item in query)
+                    {
+                        LoadRegisterItem(item);
+                    }
+
+                }
+                else if (SearchText.ToUpper() =="U")
+                {
+                    var query = model.RegisterLineItems.Include("Category").Where(x => x.IsCleared==false).ToList();
+                    LineItems.Clear();
+                    foreach (var item in query)
+                    {
+                        LoadRegisterItem(item);
+                    }
+                }
+
+            }
+             
+            else
+            {
+                //clear filter
+                LoadData();
+            }
         }
         void SaveLineItem(RegisterItem item)
         {

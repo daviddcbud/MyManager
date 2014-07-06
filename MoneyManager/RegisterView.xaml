@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox Header="Date">
+            <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button HorizontalAlignment="Left" Content="Close" Command="{Binding CloseCommand}"/>
                 <TextBlock FontWeight="Bold" Text="From" Margin="0,0,2,0"/>
@@ -24,6 +25,12 @@
                 <TextBlock Margin="0,0,2,0" FontWeight="Bold" Text="To"/>
                 <DatePickerTextBox HorizontalAlignment="Left" Margin="0,0,2,0" Width="100" Text="{Binding EndDate,StringFormat=d}"/>
                  
+            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Search For:"/>
+                    <TextBox x:Name="txtSearch" MinWidth="250" Text="{Binding SearchText}"/>
+                    <Button HorizontalAlignment="Left" Content="Search" Command="{Binding SearchCommand}"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
