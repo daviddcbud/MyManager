@@ -4,9 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                 xmlns:controls="clr-namespace:MoneyManager.Controls"
+             xmlns:local="clr-namespace:MoneyManager"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBox" x:Key="clearedStyle">
+                <Setter Property="Background" Value="Yellow"/>
+            </Style>
+            <local:RegisterStyleConverter x:Key="styleSelector"/>
+             
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -71,7 +79,16 @@
 
                                         
                                     </controls:EnterAsTabAutoComplete>
-                                    <TextBox Margin="0,0,2,0" Width="75" Text="{Binding AmountString}"/>
+                                    <TextBox  Margin="0,0,2,0" Width="75" Text="{Binding AmountString}">
+                                        <TextBox.Style>
+                                            <MultiBinding Converter="{StaticResource styleSelector}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding RelativeSource="{RelativeSource Self}" />
+                                                    <Binding Path="IsCleared" />
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </TextBox.Style>
+                                    </TextBox>
                                     <TextBox Margin="0,0,2,0" Width="150" Text="{Binding Description}"/>
                                     <Button Content=".." Width="25" Command="{Binding DetailsCommand}"/>
                                     <CheckBox IsChecked="{Binding IsCleared,UpdateSourceTrigger=PropertyChanged}" Content="Cleared?"/>
