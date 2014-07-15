@@ -19,7 +19,7 @@
                 <DatePickerTextBox HorizontalAlignment="Left" Margin="0,0,2,0" Width="100" Text="{Binding EndDate,StringFormat=d}"/>
             </StackPanel>
         </GroupBox>
-        <DataGrid ItemsSource="{Binding LineItems}" AutoGenerateColumns="False"
+        <DataGrid   ItemsSource="{Binding LineItems}" AutoGenerateColumns="False"
                   Grid.Row="1"
                    CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -27,6 +27,13 @@
                 <DataGridTextColumn Header="Budget" Binding="{Binding BudgetAmount,StringFormat=N2}"/>
                 <DataGridTextColumn Header="Actual" Binding="{Binding ActualAmount,StringFormat=N2}"/>
                 <DataGridTextColumn Header="Excess/Deficit" Binding="{Binding Excess,StringFormat=N2}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Details" Tag="{Binding}" Click="Button_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

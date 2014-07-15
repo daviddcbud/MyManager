@@ -25,5 +25,15 @@ namespace MoneyManager
             InitializeComponent();
             DataContext = vm;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm=DataContext as AnalysisViewVM;
+            var button = sender as Button;
+            var lineitem = button.Tag as AnalysisItem;
+            var win = new AnalysisDetailsWindow();
+            win.Load(lineitem.Category, vm.StartDate, vm.EndDate);
+            win.Show();
+        }
     }
 }

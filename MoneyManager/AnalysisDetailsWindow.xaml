@@ -1,0 +1,13 @@
+﻿<Window x:Class="MoneyManager.AnalysisDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AnalysisDetailsWindow" Height="300" Width="300">
+    <Grid>
+        <DataGrid x:Name="grid" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Description" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount,StringFormat=N2}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
