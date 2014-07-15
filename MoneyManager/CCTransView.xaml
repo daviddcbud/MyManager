@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -70,7 +70,7 @@
             </GroupBox>
         </ScrollViewer>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="5">
             <TextBlock FontWeight="Bold" Text="Total"/>
             <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}"/>
             <TextBlock FontWeight="Bold" Text="Pay Total"/>
