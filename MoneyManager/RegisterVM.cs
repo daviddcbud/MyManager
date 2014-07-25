@@ -88,6 +88,7 @@ namespace MoneyManager
             LineItems.Add(newItem);
         }
         public decimal RealTotal { get; set; }
+         
         void ComputeTotal()
         {
             var beginTotal = model.sp_BalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault() ;
@@ -164,6 +165,7 @@ namespace MoneyManager
         IEventAggregator events;
         IUnityContainer container;
         public DelegateCommand CloseCommand { get; set; }
+        
         public DelegateCommand SearchCommand { get; set; }
         public string SearchText { get; set; }
         public RegisterVM(IEventAggregator events, IUnityContainer container)
@@ -175,9 +177,11 @@ namespace MoneyManager
             LoadCategories();
             CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
             SearchCommand = new DelegateCommand(() => Search());
+             
             events.GetEvent<RegisterAmountChanged>().Subscribe((x) => ComputeTotal());
             events.GetEvent<RegisterLineAmountChanged>().Subscribe((x) => UpdateAmount(x));
             events.GetEvent<DetailsSaveMe>().Subscribe((x) => SaveLineItem(x));
+            events.GetEvent<DeleteMe>().Subscribe((x) => DeleteItem(x));
             StartDate = DateTime.Today.AddDays(-30);
             EndDate = DateTime.Today;
             LoadData();
@@ -241,6 +245,19 @@ namespace MoneyManager
             item.IsDirty = false;
             item.Id = newItem.ID;
         }
+        void DeleteItem(RegisterItem item)
+        {
+            if (item.Id > 0)
+            {
+                var toRemove = model.RegisterLineItems.Where(x => x.ID == item.Id).Single();
+                model.RegisterLineItems.Remove(toRemove);
+                model.SaveChanges();
+            }
+            LineItems.Remove(item);
+            ComputeTotal();
+            
+        }
+
         void UpdateAmount(RegisterLineItem header)
         {
             var item = LineItems.Where(x => x.Id == header.ID).Single();

@@ -19,6 +19,9 @@ namespace MoneyManager
     public class DetailsSaveMe : CompositePresentationEvent<RegisterItem>
     {
     }
+    public class DeleteMe : CompositePresentationEvent<RegisterItem>
+    {
+    }
     public class RegisterItem:BindableBase
     {
         public DelegateCommand DetailsCommand { get; set; }
@@ -123,12 +126,20 @@ namespace MoneyManager
         public List<string> CategoryNames { get; set; }
         public string CategoryName { get; set; }
         IEventAggregator events;
+        public DelegateCommand DeleteCommand { get; set; }
         public RegisterItem(IEventAggregator events)
         {
             this.events = events;
             Categories = new List<Category>();
             CategoryNames = new List<string>();
             DetailsCommand = new DelegateCommand(() => ShowDetails());
+            DeleteCommand = new DelegateCommand(() => Delete());
+        }
+        void Delete()
+        {
+            
+            events.GetEvent<DeleteMe>().Publish(this);
+             
         }
         void ShowDetails()
         {

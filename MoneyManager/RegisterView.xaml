@@ -92,6 +92,7 @@
                                     <TextBox Margin="0,0,2,0" Width="150" Text="{Binding Description}"/>
                                     <Button Content=".." Width="25" Command="{Binding DetailsCommand}"/>
                                     <CheckBox IsChecked="{Binding IsCleared,UpdateSourceTrigger=PropertyChanged}" Content="Cleared?"/>
+                                    <Button Content="x" Width="25" Command="{Binding DeleteCommand}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

@@ -34,6 +34,7 @@ namespace MoneyManager
             DataContext = vm;
             this.container = container;
             events.GetEvent<DetailsEvent>().Subscribe(ShowDetails);
+
         }
          void ShowDetails(int Id)
          {
