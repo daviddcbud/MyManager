@@ -26,7 +26,7 @@ namespace MoneyManager
         {
             Loading = true;
             LineItems = new ObservableCollection<CCItemVM>();
-            var list = model.CreditCardTransactions.Include("Category").Where(x => x.Paid ==false).ToList();
+            var list = model.CreditCardTransactions.Include("Category").Where(x => x.Paid ==false).OrderBy(x=>x.Date).ToList();
             foreach (var item in list)
             {
                 var newItem = container.Resolve<CCItemVM>();
