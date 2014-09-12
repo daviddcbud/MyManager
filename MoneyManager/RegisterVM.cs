@@ -95,7 +95,15 @@ namespace MoneyManager
             decimal begin = 0;
             if (beginTotal != null) begin = beginTotal.Value;
             Total = begin + LineItems.Where(x=>x.IsCleared==true).Sum(x => x.Amount);
-            RealTotal = Total + model.RegisterLineItems.Where(x => x.IsCleared == false).Sum(x => x.Amount);
+            var noncleared = model.RegisterLineItems.Where(x => x.IsCleared == false).ToList();
+            if (noncleared.Count != 0)
+            {
+                RealTotal = Total + noncleared.Sum(x => x.Amount);
+            }
+            else
+            {
+                RealTotal = Total;
+            }
             var cc = model.CreditCardTransactions.Where(x => x.Paid == false).Sum(x => x.Amount);
             RealTotal += cc;
             RealTotal *= -1;
