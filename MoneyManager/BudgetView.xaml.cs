@@ -39,5 +39,23 @@ namespace MoneyManager
             var vm = bx.DataContext as BudgetItemVM;
             vm.Category = vm.Categories.Where(x => x.Name == bx.Text).FirstOrDefault();
         }
+        void PostRegister()
+        {
+            viewModel.PostRegister();
+        }
+        void PostSavings()
+        {
+            viewModel.PostSavings();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PostSavings();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            PostRegister();
+        }
     }
 }

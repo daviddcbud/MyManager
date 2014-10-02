@@ -66,6 +66,7 @@ namespace MoneyManager
             OnPropertyChanged(() => LineItems);
             ComputeTotal();
             Loading = false;
+            ShowTotals();
 
         }
 
@@ -88,28 +89,13 @@ namespace MoneyManager
             LineItems.Add(newItem);
         }
         public decimal RealTotal { get; set; }
-         
+        public decimal CreditCardTotal { get; set; }
+        public decimal OutstandingBudget { get; set; }
         void ComputeTotal()
         {
-            var beginTotal = model.sp_BalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault() ;
-            decimal begin = 0;
-            if (beginTotal != null) begin = beginTotal.Value;
-            Total = begin + LineItems.Where(x=>x.IsCleared==true).Sum(x => x.Amount);
-            var noncleared = model.RegisterLineItems.Where(x => x.IsCleared == false).ToList();
-            if (noncleared.Count != 0)
-            {
-                RealTotal = Total + noncleared.Sum(x => x.Amount);
-            }
-            else
-            {
-                RealTotal = Total;
-            }
-            var cc = model.CreditCardTransactions.Where(x => x.Paid == false).Sum(x => x.Amount);
-            RealTotal += cc;
-            RealTotal *= -1;
-            Total *= -1;
-            OnPropertyChanged(() => Total);
-            OnPropertyChanged(() => RealTotal);
+
+            
+            
             if (Loading) return;
 
             foreach (var item in LineItems.Where(x => x.IsDirty))
@@ -168,7 +154,49 @@ namespace MoneyManager
                 LineItems.Add(newItem);
                 Loading = false;
             }
+            ShowTotals();
+        }
 
+        private void ShowTotals()
+        {
+            var beginTotal = model.sp_BalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault();
+            decimal begin = 0;
+            if (beginTotal != null) begin = beginTotal.Value;
+            Total = begin + LineItems.Where(x => x.IsCleared == true).Sum(x => x.Amount);
+            var noncleared = model.RegisterLineItems.Where(x => x.IsCleared == false).ToList();
+            if (noncleared.Count != 0)
+            {
+                var nonclearedAmount = noncleared.Sum(x => x.Amount);
+                RealTotal = Total + nonclearedAmount;
+            }
+            else
+            {
+                RealTotal = Total;
+            }
+            var cc = model.CreditCardTransactions.Where(x => x.Paid == false).Sum(x => x.Amount);
+            CreditCardTotal = cc;
+            RealTotal += cc;
+            //get remaining unspent budget items
+            var fromd = DateTime.Today;
+            var endDate = DateTime.Today;
+            if (EndDate.Day > 15)
+            {
+                endDate = DateTime.Parse(EndDate.Month + "/1/" + EndDate.Year).AddMonths(1).AddDays(-1);
+                fromd = DateTime.Parse(EndDate.Month + "/16/" + EndDate.Year);
+            }
+            else
+            {
+                endDate = DateTime.Parse(EndDate.Month + "/15/" + EndDate.Year);
+                fromd = DateTime.Parse(EndDate.Month + "/1/" + EndDate.Year);
+            }
+            OutstandingBudget = model.sp_OutstandingBudget(fromd, endDate).First().Value;
+            RealTotal += OutstandingBudget;
+            RealTotal *= -1;
+            Total *= -1;
+            OnPropertyChanged(() => Total);
+            OnPropertyChanged(() => RealTotal);
+            OnPropertyChanged(() => CreditCardTotal);
+            OnPropertyChanged(() => OutstandingBudget);
         }
         IEventAggregator events;
         IUnityContainer container;

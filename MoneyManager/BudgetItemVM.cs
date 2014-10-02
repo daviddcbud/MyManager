@@ -19,6 +19,21 @@ namespace MoneyManager
         public int Id { get; set; }
         decimal amount = 0;
         string amountString = "";
+        bool post = false;
+        public bool Post
+        {
+            get
+            {
+                return post;
+            }
+            set
+            {
+
+                if (post != value) IsDirty = true;
+                SetProperty(ref this.post, value);
+                events.GetEvent<BudgetAmountChanged>().Publish(null);
+            }
+        }
         bool isSavings = false;
         public bool IsSavings
         {

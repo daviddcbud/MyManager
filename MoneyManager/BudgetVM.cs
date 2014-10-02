@@ -34,7 +34,53 @@ namespace MoneyManager
                 LoadBudgetItems();
             }
         }
-        
+        public void PostSavings()
+        {
+            var catid = model.Categories.Where(x => x.Name == "SAVINGS DEPOSIT").Single().ID;
+            var date = selectedDate.StartDate;
+            decimal total = 0;
+            foreach(var item in BudgetLineItems)
+            {
+                if(item.IsSavings)
+                {
+                    total += item.Amount;
+                }
+                
+            }
+            var register = new RegisterLineItem();
+            register.Amount = total;
+            register.Date = date;
+            register.CategoryId = catid;
+            register.Description = "";
+            register.Notes = "";
+            register.IsCleared = false;
+            model.RegisterLineItems.Add(register);
+            model.SaveChanges();
+
+        }
+        public void PostRegister()
+        {
+            var date = selectedDate.StartDate;
+             
+            foreach (var item in BudgetLineItems)
+            {
+                if (item.Post)
+                {
+                    var register = new RegisterLineItem();
+                    register.Amount = item.Amount;
+                    register.Date = date;
+                    register.CategoryId = item.Category.ID;
+                     
+                    register.Description = "";
+                    register.Notes = "";
+                    register.IsCleared = false;
+                    model.RegisterLineItems.Add(register);
+                }
+
+            }
+            
+            model.SaveChanges();
+        }
         void LoadBudgetItems()
         {
             Loading = true;
@@ -51,6 +97,7 @@ namespace MoneyManager
                 newItem.Categories = Categories;
                 newItem.Category = Categories.Where(x => x.ID == item.CategoryId).Single();
                 newItem.CategoryName = newItem.Category.Name;
+                if (item.PostToRegister.HasValue) newItem.Post = item.PostToRegister.Value;
                 newItem.IsDirty = false;
                 BudgetLineItems.Add(newItem);
             }
@@ -96,6 +143,7 @@ namespace MoneyManager
                 }
                 if (item.Category == null) continue;
                 findIt.IsSavings = item.IsSavings;
+                findIt.PostToRegister = item.Post;
                 findIt.CategoryId = item.Category.ID;
                 findIt.Amount = item.Amount;
                 findIt.Description = item.Description;

@@ -55,5 +55,18 @@ namespace MoneyManager
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AnalysisItemType>("sp_Analysis", fromDateParameter, toDateParameter);
         }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_OutstandingBudget(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_OutstandingBudget", startDateParameter, endDateParameter);
+        }
     }
 }

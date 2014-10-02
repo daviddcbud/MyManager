@@ -20,6 +20,7 @@ namespace MoneyManager
         public string Description { get; set; }
         public decimal Amount { get; set; }
         public Nullable<bool> IsSavings { get; set; }
+        public Nullable<bool> PostToRegister { get; set; }
     
         public virtual BudgetHeader BudgetHeader { get; set; }
         public virtual Category Category { get; set; }

@@ -84,6 +84,10 @@
       <Parameter Name="fromDate" Mode="In" Type="DateTime" />
       <Parameter Name="toDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="sp_OutstandingBudget" ReturnType="Collection(Decimal)">
+      <Parameter Name="startDate" Mode="In" Type="DateTime" />
+      <Parameter Name="endDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="BudgetLineItem">
     <Key>
@@ -97,6 +101,7 @@
     <NavigationProperty Name="BudgetHeader" Relationship="MoneyManagerModel.FK_BudgetLineItems_BudgetHeaders" FromRole="BudgetLineItem" ToRole="BudgetHeader" />
     <NavigationProperty Name="Category" Relationship="MoneyManagerModel.FK_BudgetLineItems_Categories" FromRole="BudgetLineItem" ToRole="Category" />
     <Property Name="IsSavings" Type="Boolean" />
+    <Property Name="PostToRegister" Type="Boolean" />
   </EntityType>
   <Association Name="FK_BudgetLineItems_BudgetHeaders">
     <End Type="MoneyManagerModel.BudgetHeader" Role="BudgetHeader" Multiplicity="1" />

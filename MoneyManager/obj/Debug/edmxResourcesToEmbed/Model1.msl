@@ -34,6 +34,7 @@
     <EntitySetMapping Name="BudgetLineItems">
       <EntityTypeMapping TypeName="MoneyManagerModel.BudgetLineItem">
         <MappingFragment StoreEntitySet="BudgetLineItems">
+          <ScalarProperty Name="PostToRegister" ColumnName="PostToRegister" />
           <ScalarProperty Name="IsSavings" ColumnName="IsSavings" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -76,5 +77,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_OutstandingBudget" FunctionName="MoneyManagerModel.Store.sp_OutstandingBudget" />
   </EntityContainerMapping>
 </Mapping>
