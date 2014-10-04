@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AccountTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Goal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="EntryDetails" Relationship="Self.FK_EntryDetail_Account" FromRole="Account" ToRole="EntryDetail" />
+  </EntityType>
+  <EntityType Name="EntryDetail">
+    <Key>
+      <PropertyRef Name="EntryDetailid" />
+    </Key>
+    <Property Name="EntryDetailid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EntryHeaderID" Type="Int32" Nullable="false" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_EntryDetail_Account" FromRole="EntryDetail" ToRole="Account" />
+    <NavigationProperty Name="EntryHeader" Relationship="Self.FK_EntryDetail_EntryHeader" FromRole="EntryDetail" ToRole="EntryHeader" />
+  </EntityType>
+  <EntityType Name="EntryHeader">
+    <Key>
+      <PropertyRef Name="EntryHeaderID" />
+    </Key>
+    <Property Name="EntryHeaderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Comments" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypeofEntry" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EntryDetails" Relationship="Self.FK_EntryDetail_EntryHeader" FromRole="EntryHeader" ToRole="EntryDetail" />
+  </EntityType>
+  <Association Name="FK_EntryDetail_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="EntryDetail" Type="Self.EntryDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="EntryDetail">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EntryDetail_EntryHeader">
+    <End Role="EntryHeader" Type="Self.EntryHeader" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EntryDetail" Type="Self.EntryDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EntryHeader">
+        <PropertyRef Name="EntryHeaderID" />
+      </Principal>
+      <Dependent Role="EntryDetail">
+        <PropertyRef Name="EntryHeaderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AccountTrackerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="EntryDetails" EntityType="Self.EntryDetail" />
+    <EntitySet Name="EntryHeaders" EntityType="Self.EntryHeader" />
+    <AssociationSet Name="FK_EntryDetail_Account" Association="Self.FK_EntryDetail_Account">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="EntryDetail" EntitySet="EntryDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EntryDetail_EntryHeader" Association="Self.FK_EntryDetail_EntryHeader">
+      <End Role="EntryHeader" EntitySet="EntryHeaders" />
+      <End Role="EntryDetail" EntitySet="EntryDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

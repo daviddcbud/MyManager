@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MoneyManager.SavingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid TextBlock.FontSize="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions> 
+        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+            <Button HorizontalAlignment="Left" Content="Close" Command="{Binding CloseCommand}"/>
+            <TextBlock FontWeight="Bold">Total Balance: </TextBlock>
+            <TextBlock FontSize="14" FontWeight="Bold"  Text="{Binding Balance,StringFormat=N2}"/>
+            <Button Margin="3" Click="Button_Click">Transfer</Button>
+            <Button Margin="3" Click="Button_Click_1">Deposit</Button>
+            <Button Margin="3" Click="Button_Click_2">Withdrawal</Button>
+        </StackPanel>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Data}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Account" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Balance" Binding="{Binding Balance,StringFormat=N2}"/>
+                <DataGridTextColumn Header="Goal" Binding="{Binding Goal,StringFormat=N2}"/>
+                <DataGridTextColumn Header="Difference" Binding="{Binding Diff,StringFormat=N2}"/>
+            </DataGrid.Columns>
+            
+        </DataGrid>
+    </Grid>
+</UserControl>

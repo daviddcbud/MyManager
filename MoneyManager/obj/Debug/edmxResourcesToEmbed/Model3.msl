@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AccountTrackerModelStoreContainer" CdmEntityContainer="AccountTrackerEntities">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="AccountTrackerModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Goal" ColumnName="Goal" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntryDetails">
+      <EntityTypeMapping TypeName="AccountTrackerModel.EntryDetail">
+        <MappingFragment StoreEntitySet="EntryDetail">
+          <ScalarProperty Name="EntryDetailid" ColumnName="EntryDetailid" />
+          <ScalarProperty Name="EntryHeaderID" ColumnName="EntryHeaderID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntryHeaders">
+      <EntityTypeMapping TypeName="AccountTrackerModel.EntryHeader">
+        <MappingFragment StoreEntitySet="EntryHeader">
+          <ScalarProperty Name="EntryHeaderID" ColumnName="EntryHeaderID" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="TypeofEntry" ColumnName="TypeofEntry" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

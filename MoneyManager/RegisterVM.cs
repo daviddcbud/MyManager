@@ -173,7 +173,10 @@ namespace MoneyManager
             {
                 RealTotal = Total;
             }
-            var cc = model.CreditCardTransactions.Where(x => x.Paid == false).Sum(x => x.Amount);
+            var ccList = model.CreditCardTransactions.Where(x => x.Paid == false).ToList();
+            decimal cc = 0;
+            if(ccList.Count > 0) cc= ccList.Sum(x => x.Amount);
+
             CreditCardTotal = cc;
             RealTotal += cc;
             //get remaining unspent budget items

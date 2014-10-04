@@ -86,5 +86,15 @@ namespace MoneyManager
             tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
 
         }
+
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            var vc = container.Resolve<SavingsView>();
+            var tabItem = new TabItem();
+            tabItem.Header = "Savings";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+        }
     }
 }

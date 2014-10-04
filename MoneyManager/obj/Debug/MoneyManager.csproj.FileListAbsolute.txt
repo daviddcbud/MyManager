@@ -69,3 +69,9 @@ C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\o
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\PasswordWindow.g.cs
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\AnalysisDetailsWindow.baml
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\AnalysisDetailsWindow.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\SavingsView.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\SavingsView.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\TransferWindow.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\TransferWindow.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\ChangeWindow.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\ChangeWindow.g.cs

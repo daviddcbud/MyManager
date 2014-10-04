@@ -1,0 +1,52 @@
+﻿<Window x:Class="MoneyManager.ChangeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Change" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Margin="2">
+                <TextBlock FontWeight="Bold" x:Name="txtTotal"/>
+            </StackPanel>
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account1" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount1"/>
+            </StackPanel>
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account2" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount2"/>
+            </StackPanel>
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account3" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount3"/>
+            </StackPanel>
+
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account4" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount4"/>
+            </StackPanel>
+
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account5" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount5"/>
+            </StackPanel>
+
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account6" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount6"/>
+            </StackPanel>
+
+
+            <StackPanel Margin="2" Orientation="Horizontal">
+                <ComboBox x:Name="account7" MinWidth="250"/>
+                <TextBox TextChanged="amount_TextChanged"  MinWidth="50" x:Name="amount7"/>
+            </StackPanel>
+            
+            <Button Margin="5" Click="Button_Click" HorizontalAlignment="Left">Post</Button>
+
+        </StackPanel>
+    </Grid>
+</Window>
