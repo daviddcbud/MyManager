@@ -71,6 +71,7 @@
                                 <TextBox Width="150" Text="{Binding Description}"/>
                                     <CheckBox IsChecked="{Binding IsSavings}" Content="Savings?"/>
                                     <CheckBox Margin="3,0,0,0" IsChecked="{Binding Post}" Content="Register?"/>
+                                    <TextBlock Margin="3,0,0,0" Text="{Binding Balance}"/>
                                 </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

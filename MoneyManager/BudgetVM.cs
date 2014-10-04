@@ -99,6 +99,22 @@ namespace MoneyManager
                 newItem.CategoryName = newItem.Category.Name;
                 if (item.PostToRegister.HasValue) newItem.Post = item.PostToRegister.Value;
                 newItem.IsDirty = false;
+
+                if (!item.IsSavings.Value )
+                {
+                    decimal spent = 0;
+                    var register = model.RegisterLineItems.Where(x => x.Date <= SelectedDate.EndDate && x.Date >= SelectedDate.StartDate
+                        && x.CategoryId == item.CategoryId).ToList();
+                    if (register.Count > 0) spent = register.Sum(x => x.Amount);
+
+                    var cc = model.CreditCardTransactions.Where(x => x.Date <= SelectedDate.EndDate && x.Date >= SelectedDate.StartDate
+                        && x.CategoryId == item.CategoryId).ToList();
+                    if (cc.Count > 0) spent += cc.Sum(x => x.Amount);
+
+
+
+                    newItem.Balance = newItem.Amount - spent;
+                }
                 BudgetLineItems.Add(newItem);
             }
             for (int i = BudgetLineItems.Count; i < 50; i++)

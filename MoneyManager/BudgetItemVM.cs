@@ -20,6 +20,18 @@ namespace MoneyManager
         decimal amount = 0;
         string amountString = "";
         bool post = false;
+        decimal? balance = null;
+        public decimal?  Balance
+        {
+            get
+            {
+                return balance;
+            }
+            set
+            {
+                SetProperty(ref this.balance,value);
+            }
+        }
         public bool Post
         {
             get
