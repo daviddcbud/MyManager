@@ -93,11 +93,7 @@ namespace MoneyManager
             {
                 AddDetail(header, amount, ((Account)account5.SelectedItem).AccountID);
             }
-            amount = ParseIt(amount5);
-            if (amount != 0)
-            {
-                AddDetail(header, amount, ((Account)account5.SelectedItem).AccountID);
-            }
+          
 
             amount = ParseIt(amount6);
             if (amount != 0)
