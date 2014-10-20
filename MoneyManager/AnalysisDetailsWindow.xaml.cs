@@ -30,16 +30,17 @@ namespace MoneyManager
             using(var model= new MoneyManagerEntities())
             {
                 var linedetails = model.RegisterLineItemDetails.Include("Category").Include("RegisterLineItem").Where(x => x.RegisterLineItem.Date >= from
-                    && x.RegisterLineItem.Date <= to && x.Category.Name == category);
+                    && x.RegisterLineItem.Date <= to && x.Category.Name == category).OrderBy(x=>x.RegisterLineItem.Date);
                 foreach(var item in linedetails)
                 {
                     var find = list.Where(x => x.Name == item.Note).FirstOrDefault();
-                    if (find == null)
-                    {
+                  //  if (find == null)
+                   // {
                         find = new LineItemDetail();
+                        find.Date = item.RegisterLineItem.Date;
                         find.Name = item.Note;
                         list.Add(find);
-                    }
+                    //}
                     find.Amount += item.Amount;
                 }
 
@@ -48,12 +49,13 @@ namespace MoneyManager
                 foreach (var item in rlines)
                 {
                     var find = list.Where(x => x.Name == item.Description ).FirstOrDefault();
-                    if (find == null)
-                    {
+                    //if (find == null)
+                    //{
                         find = new LineItemDetail();
+                        find.Date = item.Date;
                         find.Name = item.Description;
                         list.Add(find);
-                    }
+                    //}
                     find.Amount += item.Amount;
                 }
 
@@ -62,16 +64,17 @@ namespace MoneyManager
                 foreach (var item in cc)
                 {
                     var find = list.Where(x => x.Name == item.Notes).FirstOrDefault();
-                    if (find == null)
-                    {
+                    //if (find == null)
+                    //{
                         find = new LineItemDetail();
+                        find.Date = item.Date;
                         find.Name = item.Notes ;
                         list.Add(find);
-                    }
+                    //}
                     find.Amount += item.Amount;
                 }
 
-                grid.ItemsSource = list.OrderBy(x => x.Name).ToList();
+                grid.ItemsSource = list.OrderBy(x => x.Date).ToList();
             }
         }
     }
@@ -80,5 +83,7 @@ namespace MoneyManager
     {
         public string Name { get; set; }
         public decimal Amount { get; set; }
+
+        public DateTime   Date { get; set; }
     }
 }
