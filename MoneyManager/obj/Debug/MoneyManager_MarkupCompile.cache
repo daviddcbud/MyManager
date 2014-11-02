@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\App.xaml
-131579104726
+142102753054
 
-58-424572109
+59-1295084315
 81-1073669959
-AnalysisDetailsWindow.xaml;AnalysisView.xaml;BudgetView.xaml;CCTransView.xaml;ChangeWindow.xaml;LineItemsView.xaml;LineItemsWindow.xaml;LoginsView.xaml;MainWindow.xaml;PasswordWindow.xaml;RegisterView.xaml;SavingsView.xaml;TransferWindow.xaml;
+AnalysisDetailsWindow.xaml;AnalysisView.xaml;BudgetView.xaml;CCTransView.xaml;ChangeWindow.xaml;EditLogin.xaml;LineItemsView.xaml;LineItemsWindow.xaml;LoginsView.xaml;MainWindow.xaml;PasswordWindow.xaml;RegisterView.xaml;SavingsView.xaml;TransferWindow.xaml;
 
 False
 

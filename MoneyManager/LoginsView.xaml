@@ -11,17 +11,28 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+        <StackPanel>
         <Button HorizontalAlignment="Left" Content="Close" Command="{Binding CloseCommand}"/>
+        <Button HorizontalAlignment="Left"  Content="New" Click="Button_Click_1"/>
+        </StackPanel>
         <StackPanel Grid.Row="1">
             <TextBlock Text="Filter"/>
         <TextBox Grid.Row="1" x:Name="txtFilter" KeyUp="TextBox_KeyUp" MinWidth="250"/>
         </StackPanel>
-        <DataGrid IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Logins}">
+        
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Logins}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Url" Binding="{Binding URL}"/>
                 <DataGridTextColumn Header="User Name" Binding="{Binding UserName}"/>
                 <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit" Tag="{Binding}" Click="Button_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

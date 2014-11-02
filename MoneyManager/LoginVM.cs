@@ -12,12 +12,12 @@ namespace MoneyManager
     public class LoginVM
     {
         public ObservableCollection<LoginItemVM> Logins { get; set; }
-        public List<LoginItemVM> AllLogins { get; set; }
+        public ObservableCollection<LoginItemVM> AllLogins { get; set; }
         public DelegateCommand CloseCommand { get; set; }
         public LoginVM(IEventAggregator events)
         {
             Logins = new ObservableCollection<LoginItemVM>();
-            AllLogins = new List<LoginItemVM>();
+            AllLogins = new ObservableCollection<LoginItemVM>();
             CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
         }
         public void Filter(string filter)
@@ -33,12 +33,15 @@ namespace MoneyManager
         }
         public void Load(string password)
         {
+            Logins.Clear();
+            AllLogins.Clear();
             using (var model = new LoginTrackerEntities())
             {
                 var items = model.UserAccounts.OrderBy(x => x.Description);
                 foreach (var item in items)
                 {
                     var vm = new LoginItemVM();
+                    vm.Id = item.ID;
                     vm.Name = item.Description;
                     vm.URL = item.URL;
                     vm.UserName = item.UserName;
@@ -56,5 +59,7 @@ namespace MoneyManager
         public string URL { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+
+        public int Id { get; set; }
     }
 }

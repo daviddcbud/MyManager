@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AccountTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Goal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="SortOrder" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="EntryDetail">
+    <Key>
+      <PropertyRef Name="EntryDetailid" />
+    </Key>
+    <Property Name="EntryDetailid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EntryHeaderID" Type="int" Nullable="false" />
+    <Property Name="AccountID" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntryHeader">
+    <Key>
+      <PropertyRef Name="EntryHeaderID" />
+    </Key>
+    <Property Name="EntryHeaderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TransDate" Type="date" Nullable="false" />
+    <Property Name="Comments" Type="varchar" MaxLength="8000" Nullable="false" />
+    <Property Name="TypeofEntry" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EntryDetail_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="EntryDetail" Type="Self.EntryDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="EntryDetail">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EntryDetail_EntryHeader">
+    <End Role="EntryHeader" Type="Self.EntryHeader" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EntryDetail" Type="Self.EntryDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EntryHeader">
+        <PropertyRef Name="EntryHeaderID" />
+      </Principal>
+      <Dependent Role="EntryDetail">
+        <PropertyRef Name="EntryHeaderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AccountTrackerModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EntryDetail" EntityType="Self.EntryDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EntryHeader" EntityType="Self.EntryHeader" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EntryDetail_Account" Association="Self.FK_EntryDetail_Account">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="EntryDetail" EntitySet="EntryDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EntryDetail_EntryHeader" Association="Self.FK_EntryDetail_EntryHeader">
+      <End Role="EntryHeader" EntitySet="EntryHeader" />
+      <End Role="EntryDetail" EntitySet="EntryDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

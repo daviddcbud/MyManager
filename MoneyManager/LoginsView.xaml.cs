@@ -20,6 +20,7 @@ namespace MoneyManager
     /// </summary>
     public partial class LoginsView : UserControl
     {
+        private string password;
         public LoginsView(LoginVM vm)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace MoneyManager
         }
         public void Load(string password)
         {
+            this.password = password;
             var vm = DataContext as LoginVM;
             vm.Load(password);
         }
@@ -35,6 +37,27 @@ namespace MoneyManager
         {
             var vm = DataContext as LoginVM;
             vm.Filter(txtFilter.Text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var edit = new EditLogin();
+             var button= sender as Button;
+
+             edit.Load(button.Tag as LoginItemVM,this.password);
+             edit.ShowDialog();
+             var vm = DataContext as LoginVM;
+            vm.Load(password);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var edit = new EditLogin();
+            
+            edit.Load(new LoginItemVM(),this.password );
+            edit.ShowDialog();
+            var vm = DataContext as LoginVM;
+            vm.Load(password);
         }
     }
 }

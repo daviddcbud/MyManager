@@ -165,6 +165,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL.cs" />
+    <Compile Include="EditLogin.xaml.cs">
+      <DependentUpon>EditLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Encryption.cs" />
     <Compile Include="EntryDetail.cs">
       <DependentUpon>Model3.tt</DependentUpon>
@@ -261,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
