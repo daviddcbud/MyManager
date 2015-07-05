@@ -17,6 +17,8 @@
             <Button Margin="3" Click="Button_Click">Transfer</Button>
             <Button Margin="3" Click="Button_Click_1">Deposit</Button>
             <Button Margin="3" Click="Button_Click_2">Withdrawal</Button>
+            <Button Margin="3" Click="Button_Click_3">New Category</Button>
+            <Button Margin="3"  Click="Button_Click_6">Export Excel</Button>
         </StackPanel>
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Data}">
             <DataGrid.Columns>
@@ -24,6 +26,20 @@
                 <DataGridTextColumn Header="Balance" Binding="{Binding Balance,StringFormat=N2}"/>
                 <DataGridTextColumn Header="Goal" Binding="{Binding Goal,StringFormat=N2}"/>
                 <DataGridTextColumn Header="Difference" Binding="{Binding Diff,StringFormat=N2}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit Goal"  Click="Button_Click_4" Tag="{Binding Id}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete"  Click="Button_Click_5" Tag="{Binding Id}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
             
         </DataGrid>

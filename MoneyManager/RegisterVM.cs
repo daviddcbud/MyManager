@@ -160,38 +160,33 @@ namespace MoneyManager
         private void ShowTotals()
         {
             var beginTotal = model.sp_BalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault();
+            var fullBalance = model.sp_FullBalanceAsOf(StartDate.AddDays(-1)).FirstOrDefault();
             decimal begin = 0;
             if (beginTotal != null) begin = beginTotal.Value;
             Total = begin + LineItems.Where(x => x.IsCleared == true).Sum(x => x.Amount);
             var noncleared = model.RegisterLineItems.Where(x => x.IsCleared == false).ToList();
+            
+            decimal nonclearedAmount=0;
             if (noncleared.Count != 0)
             {
-                var nonclearedAmount = noncleared.Sum(x => x.Amount);
+                nonclearedAmount = noncleared.Sum(x => x.Amount);
                 RealTotal = Total + nonclearedAmount;
             }
             else
             {
                 RealTotal = Total;
             }
+             
             var ccList = model.CreditCardTransactions.Where(x => x.Paid == false).ToList();
             decimal cc = 0;
             if(ccList.Count > 0) cc= ccList.Sum(x => x.Amount);
 
             CreditCardTotal = cc;
             RealTotal += cc;
-            //get remaining unspent budget items
-            var fromd = DateTime.Today;
-            var endDate = DateTime.Today;
-            if (EndDate.Day > 15)
-            {
-                endDate = DateTime.Parse(EndDate.Month + "/1/" + EndDate.Year).AddMonths(1).AddDays(-1);
-                fromd = DateTime.Parse(EndDate.Month + "/16/" + EndDate.Year);
-            }
-            else
-            {
-                endDate = DateTime.Parse(EndDate.Month + "/15/" + EndDate.Year);
-                fromd = DateTime.Parse(EndDate.Month + "/1/" + EndDate.Year);
-            }
+            //get remaining unspent budget items for the month
+            var fromd = DateTime.Parse(EndDate.Month + "/1/" + EndDate.Year);
+            var endDate = fromd.AddMonths(1).AddDays(-1);
+            
             OutstandingBudget = model.sp_OutstandingBudget(fromd, endDate).First().Value;
             RealTotal += OutstandingBudget;
             RealTotal *= -1;
@@ -200,6 +195,19 @@ namespace MoneyManager
             OnPropertyChanged(() => RealTotal);
             OnPropertyChanged(() => CreditCardTotal);
             OnPropertyChanged(() => OutstandingBudget);
+            for (int i = 0; i <= LineItems.Count-1; i++)
+            {
+                var item = LineItems[i];
+                if (i == 0)
+                {
+                    item.Running = fullBalance.Value  + item.Amount;
+                }
+                else
+                {
+                    var prevItem = LineItems[i - 1];
+                    item.Running = prevItem.Running + item.Amount;
+                }
+            }
         }
         IEventAggregator events;
         IUnityContainer container;

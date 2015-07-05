@@ -4,39 +4,164 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:MoneyManager.Controls"
+             xmlns:local="clr-namespace:MoneyManager"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" x:Key="amount">
+                <Setter Property="Width" Value="80"/>
+             </Style>
+            <Style TargetType="TextBox" x:Key="amountText">
+                <Setter Property="Width" Value="80"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>   
+        <StackPanel Orientation="Horizontal">
         <GroupBox Header="Date">
             <StackPanel Orientation="Horizontal">
-                <Button HorizontalAlignment="Left" Content="Close" Command="{Binding CloseCommand}"/>
-            
-            <ComboBox HorizontalAlignment="Left" Width="150" SelectedItem="{Binding SelectedDate}" ItemsSource="{Binding Dates}" DisplayMemberPath="Display"/>
+                <Button HorizontalAlignment="Left" Height="24"
+                        Content="Close" Command="{Binding CloseCommand}"/>
+
+                <StackPanel Margin="5">
+                <TextBlock Text="Month"/>
+                <TextBox Text="{Binding Month}"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                <TextBlock Text="Year"/>
+                <TextBox Text="{Binding Year}"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
-        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
-        <GroupBox Header="Budget Items" >
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="3">
-                    <TextBlock Width="150" Text="Category"/>
-                    <TextBlock Width="150" Text="Amount"/>
-                    <TextBlock Width="150" Text="Note"/>
+
+            <StackPanel Grid.Column="1" Grid.ColumnSpan="2">
+                <StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Button Click="Button_Click">Post Savings</Button>
+                        <Button Click="Button_Click_1" Margin="2,0,0,0">Post Register Items</Button>
+                        <Button Click="Button_Click_2" Margin="2,0,0,0">Export Excel</Button>
+                        <Button  Click="Button_Click_3" Margin="2,0,0,0">New Category</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock FontWeight="Bold" Text="Savings:" Margin="10,0,0,0"/>
+                        <TextBlock FontWeight="Bold"  Margin="3,0,0,0" Text="{Binding MonthSavingsTotal,StringFormat=N2}"/>
+                    </StackPanel>
+                   
                 </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel TextBlock.FontSize="16" HorizontalAlignment="Center" Grid.ColumnSpan="5">
+            <TextBlock FontWeight="Bold" Foreground="{Binding MonthColor}" Text="Month Total:"/>
+            <TextBlock FontWeight="Bold"  Margin="3,0,0,0" Foreground="{Binding MonthColor}" Text="{Binding MonthTotal,StringFormat=N2}"/>
+        </StackPanel>
+
+        <GroupBox Header="First Pay Period"   Grid.Row="1" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14">
+                        <TextBlock FontWeight="Bold" Foreground="{Binding Color1}" Text="Net Total:"/>
+                        <TextBlock FontWeight="Bold" Foreground="{Binding Color1}"  Margin="3,0,0,0"  Text="{Binding Total,StringFormat=N2}"/>
+                        <TextBlock FontWeight="Bold" Text="Savings:" Margin="10,0,0,0"/>
+                        <TextBlock FontWeight="Bold" Text="{Binding SavingsTotal,StringFormat=N2}"  Margin="3,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Width="150" Text="Category"/>
+                        <TextBlock Style="{StaticResource amount}"  Text="Amount"/>
+                        <TextBlock Width="125" Text="Note"/>
+                    </StackPanel>
+                    </StackPanel>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+                        <ItemsControl ItemsSource="{Binding BudgetLineItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="3">
+
+                                        <controls:EnterAsTabAutoComplete  
+                                         
+                                     Height="26"
+                                     Width="150"
+                                     Padding="2,2,2,-1"
+                                     FontWeight="Normal"                                         
+                                     FilterMode="Contains"                                     
+                                     MaxDropDownHeight="250"                                     
+                                     ValueMemberBinding="{Binding Name}"
+                                     MinimumPrefixLength="0"
+                                     HorizontalAlignment="Left"  VerticalAlignment="Top" 
+                                     Margin="0,0,10,0"
+                                     Text="{Binding Category}"
+                                      IgnoreSendTab="true"
+                                     IsDropDownOpen="True" 
+                                     IsTextCompletionEnabled="True"
+                                     ItemsSource="{Binding Categories}"
+                                     SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     controls:AutoCompleteBoxBehavior.IsSelectedItemScrolledIntoView="True" LostFocus="EnterAsTabAutoComplete_LostFocus">
+
+                                        </controls:EnterAsTabAutoComplete>
+                                    <TextBox   Style="{StaticResource amountText}" Text="{Binding AmountString}"/>
+                                        <TextBox Width="100" Text="{Binding Description}"/>
+                                        <CheckBox IsChecked="{Binding IsSavings}" Content="Savings?"/>
+                                        <CheckBox Margin="3,0,0,0" IsChecked="{Binding Post}" Content="Register?"/>
+                                        <TextBlock Margin="3,0,0,0" Text="{Binding Balance}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    
+                </Grid>
+            
+                 
+                  
+                    
+                 
+
                 
-                <ItemsControl ItemsSource="{Binding BudgetLineItems}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                
+        </GroupBox>
+
+
+        <GroupBox Header="Second Pay Period"   Grid.Row="1" Grid.Column="1" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14">
+                        <TextBlock FontWeight="Bold" Foreground="{Binding Color2}" Text="Net Total:"/>
+                        <TextBlock FontWeight="Bold" Foreground="{Binding Color2}"  Margin="3,0,0,0"  Text="{Binding Total2,StringFormat=N2}"/>
+                        <TextBlock FontWeight="Bold" Text="Savings:" Margin="10,0,0,0"/>
+                        <TextBlock FontWeight="Bold" Text="{Binding SavingsTotal2,StringFormat=N2}"  Margin="3,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Width="150" Text="Category"/>
+                        <TextBlock Style="{StaticResource amount}"  Text="Amount"/>
+                        <TextBlock Width="125" Text="Note"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding BudgetLineItems2}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="3">
+
                                     <controls:EnterAsTabAutoComplete  
                                          
                                      Height="26"
@@ -57,42 +182,71 @@
                                      SelectedItem="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      controls:AutoCompleteBoxBehavior.IsSelectedItemScrolledIntoView="True" LostFocus="EnterAsTabAutoComplete_LostFocus">
 
-                                        <!--<controls:EnterAsTabAutoComplete.ItemTemplate>
-                                            <DataTemplate>
-                                                <controls:HighlightTextBlock FontWeight="Normal"
-                                                        Text="{Binding Name}"                                                        
-                                                        HighlightBrush="{x:Static SystemColors.ControlTextBrush}"
-                                                        HighlightFontWeight="Bold"
-                                                        HighlightText="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:EnterAsTabAutoComplete}},Path=SearchText}" />
-                                            </DataTemplate>
-                                        </controls:EnterAsTabAutoComplete.ItemTemplate>-->
-                                        </controls:EnterAsTabAutoComplete> 
-                                        <TextBox Width="150" Text="{Binding AmountString}"/>
-                                <TextBox Width="150" Text="{Binding Description}"/>
+                                    </controls:EnterAsTabAutoComplete>
+                                    <TextBox   Style="{StaticResource amountText}" Text="{Binding AmountString}"/>
+                                    <TextBox Width="100" Text="{Binding Description}"/>
                                     <CheckBox IsChecked="{Binding IsSavings}" Content="Savings?"/>
                                     <CheckBox Margin="3,0,0,0" IsChecked="{Binding Post}" Content="Register?"/>
                                     <TextBlock Margin="3,0,0,0" Text="{Binding Balance}"/>
                                 </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-            </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+
+
+
+
+
+
+
         </GroupBox>
-        </ScrollViewer>
-        
-        <StackPanel Grid.Column="1">
-            <StackPanel Orientation="Horizontal">
-            <TextBlock FontWeight="Bold" Text="Net Total:"/>
-            <TextBlock FontWeight="Bold" Text="{Binding Total,StringFormat=N2}"/>
-            <TextBlock FontWeight="Bold" Text="Savings To Transfer:" Margin="10,0,0,0"/>
-            <TextBlock FontWeight="Bold" Text="{Binding SavingsTotal,StringFormat=N2}"/>
-                <StackPanel Margin="2" Orientation="Horizontal">
-                    <Button Click="Button_Click">Post Savings</Button>
-                    <Button Click="Button_Click_1" Margin="2,0,0,0">Post Register Items</Button>
-                     
+
+
+        <GroupBox Header="Envelopes"   Grid.Row="1" Grid.Column="2" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" TextBlock.FontSize="14">
+                        <TextBlock FontWeight="Bold"   Text="Total:"/>
+                        <TextBlock FontWeight="Bold"   Margin="3,0,0,0"  Text="{Binding EnvTotal,StringFormat=N2}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <TextBlock Width="100" Text="Description"/>
+                        <TextBlock Style="{StaticResource amount}"  Text="Amount"/>
+                        
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </StackPanel>
+
+                <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding EnvelopeItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="3">
+                                    <TextBox Width="100" Text="{Binding Description}"/>
+                                    <TextBox Style="{StaticResource amountText}"   Text="{Binding AmountString}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+
+
+
+
+
+
+
+        </GroupBox>
+
+
     </Grid>
 </UserControl>

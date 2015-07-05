@@ -76,3 +76,8 @@ C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\o
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\MoneyManager.csproj.GenerateResource.Cache
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\MoneyManager.exe
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\MoneyManager.pdb
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\MoneyManager.csprojResolveAssemblyReference.cache
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\NewSavingsCatWindow.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\NewSavingsCatWindow.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\NewCategoryWin.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Release\NewCategoryWin.g.cs

@@ -57,5 +57,111 @@ namespace MoneyManager
         {
             PostRegister();
         }
+        string formatForCSV(string s)
+        {
+            s = Convert.ToChar(34) + s + Convert.ToChar(34);
+            return s;
+        }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            var envItems = new List<EnvItemVm>();
+            foreach (var item in viewModel.EnvelopeItems)
+            {
+                envItems.Add(item);
+            }
+            var total = viewModel.NewEnvItem();
+            total.Amount= viewModel.EnvelopeItems.Sum(x => x.Amount);
+            total.Description="TOTAL";
+            envItems.Add( total);
+            var removeIt = envItems.Where(x => x.Amount == 0).ToList();
+            foreach (var r in removeIt) envItems.Remove(r);
+            var path = "budget" + viewModel.Month + "-" + viewModel.Year + ".csv";
+            var writer = new System.IO.StreamWriter(path);
+            writer.WriteLine(formatForCSV("1st Pay Period") + "," + formatForCSV("") + "," + formatForCSV("")
+                + "," + formatForCSV("") + "," + formatForCSV("") + "," +
+                formatForCSV("") + "," + formatForCSV("2nd Pay Period") + "," 
+                 + formatForCSV("") + "," +
+                formatForCSV("") + ","  + formatForCSV("Envelopes") + "," + formatForCSV(""));
+
+            for( var i=0;i<= viewModel.BudgetLineItems.Count -1;i++)
+            {
+                var item=viewModel.BudgetLineItems[i];
+                var seconditem="";
+                var secondName="";
+                if(i<= viewModel.BudgetLineItems2.Count-1){
+                    seconditem=viewModel.BudgetLineItems2[i].Amount.ToString("N2");
+                    secondName =viewModel.BudgetLineItems2[i].CategoryName;
+                }
+
+                 var envItemName="";
+                var envItemAmount="";
+                if (i <= envItems.Count - 1)
+                {
+                    envItemAmount = envItems[i].Amount.ToString("N2");
+                    envItemName = envItems[i].Description;
+                    if (string.IsNullOrEmpty(envItemName)) envItemAmount = "";
+                }
+                if (!string.IsNullOrEmpty(item.CategoryName) || !string.IsNullOrEmpty(secondName))
+                {
+                    writer.WriteLine(formatForCSV(item.Amount.ToString("N2")) + "," +
+                        formatForCSV(item.CategoryName) + "," + formatForCSV("")
+                    + "," + formatForCSV("") + "," + formatForCSV("") + "," +
+                    formatForCSV(seconditem) + "," + formatForCSV(secondName) + "," 
+                    + formatForCSV("") + "," +
+                formatForCSV("") + ","  + formatForCSV(envItemName) + "," + formatForCSV(envItemAmount)
+                    );
+                }
+            }
+
+            var diff = viewModel.BudgetLineItems2.Count - viewModel.BudgetLineItems.Count;
+            if (diff > 0)
+            {
+                for (int i = viewModel.BudgetLineItems.Count; i <= viewModel.BudgetLineItems2.Count-1; i++)
+                {
+                    var item=viewModel.BudgetLineItems2[i];
+                     var envItemName="";
+                var envItemAmount="";
+                if (i <= envItems.Count - 1)
+                {
+                    envItemAmount = envItems[i].Amount.ToString("N2");
+                    envItemName = envItems[i].Description;
+                    if (string.IsNullOrEmpty(envItemName)) envItemAmount = "";
+                }
+                    if (!string.IsNullOrEmpty(item.CategoryName))
+                    {
+                        writer.WriteLine(formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV("")
+                        + "," + formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV(item.Amount.ToString("N2")) + "," +
+                        formatForCSV(item.CategoryName) + "," 
+                          + formatForCSV("") + "," +
+                        formatForCSV("") + ","  + formatForCSV(envItemName) + "," + formatForCSV(envItemAmount)
+                    );
+                    }
+                }
+            }
+
+
+            
+
+           
+
+
+            writer.WriteLine(formatForCSV(viewModel.Total.ToString("N2")) + "," + formatForCSV("Net") + "," + formatForCSV("")
+                + "," + formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV(viewModel.Total2.ToString("N2")) + "," +
+                formatForCSV("Net"));
+
+            writer.WriteLine();
+            writer.WriteLine(",,," + formatForCSV("Monthly Net") + "," + formatForCSV(viewModel.MonthTotal.ToString("N2")));
+
+            writer.Close();
+            System.Diagnostics.Process.Start(path);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var newcate = new NewCategoryWin();
+            newcate.ShowDialog();
+            viewModel.Reload();
+        }
     }
 }

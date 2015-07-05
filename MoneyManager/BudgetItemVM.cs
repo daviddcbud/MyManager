@@ -12,7 +12,66 @@ namespace MoneyManager
     public class BudgetAmountChanged : CompositePresentationEvent<object>
     {
     }
-    
+    public class EnvItemVm : BindableBase
+    {
+        public bool IsDirty { get; set; }
+        public int Id { get; set; }
+        decimal amount = 0;
+        string amountString = "";
+           
+        public string AmountString
+        {
+            get
+            {
+                return amountString;
+            }
+            set
+            {
+                SetProperty(ref this.amountString, value);
+                decimal parseit = 0;
+                if (decimal.TryParse(amountString, out parseit))
+                {
+                    Amount = parseit;
+                }
+            }
+        }
+        public decimal Amount
+        {
+            get
+            {
+                return amount;
+            }
+            set
+            {
+                if (amount != value) IsDirty = true;
+                SetProperty(ref this.amount, value);
+                events.GetEvent<BudgetAmountChanged>().Publish(null);
+            }
+        }
+        
+        string description = "";
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
+            set
+            {
+
+                if (description != value) IsDirty = true;
+                SetProperty(ref this.description, value);
+                events.GetEvent<BudgetAmountChanged>().Publish(null);
+            }
+        }
+        
+        IEventAggregator events;
+        public EnvItemVm(IEventAggregator events)
+        {
+            this.events = events;
+            
+        }
+    }
     public class BudgetItemVM:BindableBase
     {
         public bool IsDirty { get; set; }
@@ -21,6 +80,7 @@ namespace MoneyManager
         string amountString = "";
         bool post = false;
         decimal? balance = null;
+        
         public decimal?  Balance
         {
             get

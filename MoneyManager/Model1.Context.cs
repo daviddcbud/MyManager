@@ -33,6 +33,7 @@ namespace MoneyManager
         public virtual DbSet<BudgetLineItem> BudgetLineItems { get; set; }
         public virtual DbSet<CreditCardTransaction> CreditCardTransactions { get; set; }
         public virtual DbSet<RegisterLineItemDetail> RegisterLineItemDetails { get; set; }
+        public virtual DbSet<Envelope> Envelopes { get; set; }
     
         public virtual ObjectResult<Nullable<decimal>> sp_BalanceAsOf(Nullable<System.DateTime> date)
         {
@@ -67,6 +68,15 @@ namespace MoneyManager
                 new ObjectParameter("endDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_OutstandingBudget", startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_FullBalanceAsOf(Nullable<System.DateTime> date)
+        {
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_FullBalanceAsOf", dateParameter);
         }
     }
 }

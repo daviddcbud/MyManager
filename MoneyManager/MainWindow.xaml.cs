@@ -23,7 +23,7 @@ namespace MoneyManager
     public partial class MainWindow : Window
     {
         IUnityContainer container;
-        IEventAggregator events;
+         
         public MainWindow(IUnityContainer container,IEventAggregator events)
         {
             this.container = container;

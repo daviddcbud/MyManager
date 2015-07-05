@@ -29,6 +29,14 @@ namespace MoneyManager
        public int Id { get; set; }
         decimal amount = 0;
         string amountString = "";
+        public decimal Running { get; set; }
+        public string RunningAsString
+        {
+            get
+            {
+                return (Running * -1).ToString("N2");
+            }
+        }
         public string AmountString
         {
             get

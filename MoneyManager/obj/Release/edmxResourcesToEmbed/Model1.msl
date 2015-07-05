@@ -78,5 +78,17 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_OutstandingBudget" FunctionName="MoneyManagerModel.Store.sp_OutstandingBudget" />
+    <FunctionImportMapping FunctionImportName="sp_FullBalanceAsOf" FunctionName="MoneyManagerModel.Store.sp_FullBalanceAsOf" />
+    <EntitySetMapping Name="Envelopes">
+      <EntityTypeMapping TypeName="MoneyManagerModel.Envelope">
+        <MappingFragment StoreEntitySet="Envelopes">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

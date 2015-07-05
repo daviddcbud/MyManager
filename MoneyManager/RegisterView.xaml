@@ -76,6 +76,7 @@
                         <TextBlock Width="100" Text="Date" Margin="0,0,2,0"/>
                         <TextBlock Width="150" Text="Category" Margin="0,0,2,0"/>
                         <TextBlock Width="75" Text="Amount" Margin="0,0,2,0"/>
+                        <TextBlock Width="75" Text="Running" Margin="0,0,2,0"/>
                         <TextBlock Width="150" Text="Note" Margin="0,0,2,0"/>
                          
                     </StackPanel>
@@ -117,6 +118,7 @@
                                             </MultiBinding>
                                         </TextBox.Style>
                                     </TextBox>
+                                    <TextBlock  Margin="0,0,2,0" Width="75" Text="{Binding RunningAsString}"/>
                                     <TextBox Margin="0,0,2,0" Width="150" Text="{Binding Description}"/>
                                     <Button Content=".." Width="25" Command="{Binding DetailsCommand}"/>
                                     <CheckBox IsChecked="{Binding IsCleared,UpdateSourceTrigger=PropertyChanged}" Content="Cleared?"/>

@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="MoneyManagerModel.RegisterLineItemDetail" Width="1.5" PointX="5.25" PointY="12.5" />
         <AssociationConnector Association="MoneyManagerModel.FK_RegisterLineItemDetails_Categories" />
         <AssociationConnector Association="MoneyManagerModel.FK_RegisterLineItemDetails_RegisterLineItems" />
+        <EntityTypeShape EntityType="MoneyManagerModel.Envelope" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
