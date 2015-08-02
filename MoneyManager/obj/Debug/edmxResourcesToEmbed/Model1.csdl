@@ -88,6 +88,10 @@
       <Parameter Name="startDate" Mode="In" Type="DateTime" />
       <Parameter Name="endDate" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="sp_FullBalanceAsOf" ReturnType="Collection(Decimal)">
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <EntitySet Name="Envelopes" EntityType="MoneyManagerModel.Envelope" />
   </EntityContainer>
   <EntityType Name="BudgetLineItem">
     <Key>
@@ -194,4 +198,14 @@
     <Property Type="Decimal" Name="ActualAmount" Nullable="false" />
     <Property Type="Decimal" Name="BudgetAmount" Nullable="false" />
   </ComplexType>
+  <EntityType Name="Envelope">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
 </Schema>

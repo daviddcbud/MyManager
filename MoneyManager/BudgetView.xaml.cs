@@ -90,7 +90,7 @@ namespace MoneyManager
                 var seconditem="";
                 var secondName="";
                 if(i<= viewModel.BudgetLineItems2.Count-1){
-                    seconditem=viewModel.BudgetLineItems2[i].Amount.ToString("N2");
+                    seconditem=(viewModel.BudgetLineItems2[i].Amount*-1).ToString("N2");
                     secondName =viewModel.BudgetLineItems2[i].CategoryName;
                 }
 
@@ -104,7 +104,7 @@ namespace MoneyManager
                 }
                 if (!string.IsNullOrEmpty(item.CategoryName) || !string.IsNullOrEmpty(secondName))
                 {
-                    writer.WriteLine(formatForCSV(item.Amount.ToString("N2")) + "," +
+                    writer.WriteLine(formatForCSV((item.Amount*-1).ToString("N2")) + "," +
                         formatForCSV(item.CategoryName) + "," + formatForCSV("")
                     + "," + formatForCSV("") + "," + formatForCSV("") + "," +
                     formatForCSV(seconditem) + "," + formatForCSV(secondName) + "," 
@@ -131,7 +131,7 @@ namespace MoneyManager
                     if (!string.IsNullOrEmpty(item.CategoryName))
                     {
                         writer.WriteLine(formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV("")
-                        + "," + formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV(item.Amount.ToString("N2")) + "," +
+                        + "," + formatForCSV("") + "," + formatForCSV("") + "," + formatForCSV((item.Amount*-1).ToString("N2")) + "," +
                         formatForCSV(item.CategoryName) + "," 
                           + formatForCSV("") + "," +
                         formatForCSV("") + ","  + formatForCSV(envItemName) + "," + formatForCSV(envItemAmount)

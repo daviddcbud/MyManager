@@ -77,3 +77,7 @@ C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\o
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\ChangeWindow.g.cs
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\EditLogin.baml
 C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\EditLogin.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\NewCategoryWin.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\NewSavingsCatWindow.baml
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\NewCategoryWin.g.cs
+C:\Users\david\Documents\Visual Studio 2013\Projects\MoneyManager\MoneyManager\obj\Debug\NewSavingsCatWindow.g.cs

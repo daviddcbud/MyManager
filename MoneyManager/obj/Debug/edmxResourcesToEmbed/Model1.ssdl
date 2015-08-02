@@ -38,6 +38,16 @@
     <Property Name="Paid" Type="bit" Nullable="false" />
     <Property Name="Notes" Type="varchar" MaxLength="500" Nullable="false" />
   </EntityType>
+  <EntityType Name="Envelopes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Amount" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
   <EntityType Name="RegisterLineItemDetails">
     <Key>
       <PropertyRef Name="ID" />
@@ -141,6 +151,9 @@
   <Function Name="sp_BalanceAsOf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="date" Type="date" Mode="In" />
   </Function>
+  <Function Name="sp_FullBalanceAsOf" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
   <Function Name="sp_OutstandingBudget" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="startDate" Type="date" Mode="In" />
     <Parameter Name="endDate" Type="date" Mode="In" />
@@ -150,6 +163,7 @@
     <EntitySet Name="BudgetLineItems" EntityType="Self.BudgetLineItems" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CreditCardTransactions" EntityType="Self.CreditCardTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Envelopes" EntityType="Self.Envelopes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RegisterLineItemDetails" EntityType="Self.RegisterLineItemDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RegisterLineItems" EntityType="Self.RegisterLineItems" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_BudgetLineItems_BudgetHeaders" Association="Self.FK_BudgetLineItems_BudgetHeaders">
