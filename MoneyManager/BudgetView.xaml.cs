@@ -74,8 +74,8 @@ namespace MoneyManager
             total.Amount= viewModel.EnvelopeItems.Sum(x => x.Amount);
             total.Description="TOTAL";
             envItems.Add( total);
-            var removeIt = envItems.Where(x => x.Amount == 0).ToList();
-            foreach (var r in removeIt) envItems.Remove(r);
+            //var removeIt = envItems.Where(x => x.Amount == 0).ToList();
+            //foreach (var r in removeIt) envItems.Remove(r);
             var path = "budget" + viewModel.Month + "-" + viewModel.Year + ".csv";
             var writer = new System.IO.StreamWriter(path);
             writer.WriteLine(formatForCSV("1st Pay Period") + "," + formatForCSV("") + "," + formatForCSV("")
