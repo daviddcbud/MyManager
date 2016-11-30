@@ -77,13 +77,20 @@ namespace MoneyManager
             var vm = container.Resolve<LoginsView>();
             var pass = new PasswordWindow();
             pass.ShowDialog();
-            vm.Load(pass.Password);
+            try
+            {
+                vm.Load(pass.Password);
 
-            var tabItem = new TabItem();
-            tabItem.Header = "Logins";
-            tabItem.Content = vm;
-            tabs.Items.Add(tabItem);
-            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+                var tabItem = new TabItem();
+                tabItem.Header = "Logins";
+                tabItem.Content = vm;
+                tabs.Items.Add(tabItem);
+                tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
