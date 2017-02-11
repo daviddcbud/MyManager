@@ -33,6 +33,11 @@ namespace MoneyManager
         }
         public void Load(string password)
         {
+            if (System.Configuration.ConfigurationManager.AppSettings["logins"] == "YES")
+            {
+                LoadServiceBus(password);
+                return;
+            }
             Logins.Clear();
             AllLogins.Clear();
             using (var model = new LoginTrackerEntities())
@@ -51,7 +56,28 @@ namespace MoneyManager
                 }
             }
         }
-         
+
+        private void LoadServiceBus(string password)
+        {
+            if (string.IsNullOrEmpty(password)) return;
+            Logins.Clear();
+            AllLogins.Clear();
+            using (var ch = ServiceBusUtils.CreateChannel())
+            {
+                var list = ch.GetLogins(password);
+                foreach(var item in list)
+                {
+                    var vm = new LoginItemVM();
+                    
+                    vm.Name = item.Description;
+                    vm.URL = item.Url;
+                    vm.UserName = item.UserName;
+                    vm.Password = item.Password;
+                    Logins.Add(vm);
+                    AllLogins.Add(vm);
+                }
+            }
+        }
     }
     public class LoginItemVM
     {

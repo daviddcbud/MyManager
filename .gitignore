@@ -1,5 +1,11 @@
-MoneyManager/obj/Debug/*.*
+MoneyManager/obj/Debug/ 
 *.user
-MoneyManager/bin/*.*
-MoneyManager/bin/Debug/*.*
+MoneyManager/bin/
+MoneyManager/bin/Debug/
+*.config
+obj/
+bin/
+MoneyManager.ServiceBusServices/bin/
+MoneyManager.ServiceBusServices/obj/
+
 

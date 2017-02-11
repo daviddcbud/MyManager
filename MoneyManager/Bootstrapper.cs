@@ -42,7 +42,10 @@ namespace MoneyManager
             App.Current.MainWindow = (Window)Shell;
             
             App.Current.MainWindow.Show();
-            var cats = DAL.Categories;
+            if (System.Configuration.ConfigurationManager.AppSettings["logins"] != "YES")
+            {
+                var cats = DAL.Categories;
+            }
         }
     }
 }

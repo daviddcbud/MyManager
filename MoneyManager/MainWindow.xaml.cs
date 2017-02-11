@@ -29,6 +29,15 @@ namespace MoneyManager
             this.container = container;
             InitializeComponent();
             events.GetEvent<CloseTabEvent>().Subscribe((x) => tabs.Items.Remove(tabs.SelectedItem));
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (System.Configuration.ConfigurationManager.AppSettings["logins"] == "YES")
+            {
+                ShowLogins();
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -74,6 +83,12 @@ namespace MoneyManager
 
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
+            ShowLogins();
+
+        }
+
+        private void ShowLogins()
+        {
             var vm = container.Resolve<LoginsView>();
             var pass = new PasswordWindow();
             pass.ShowDialog();
@@ -87,11 +102,10 @@ namespace MoneyManager
                 tabs.Items.Add(tabItem);
                 tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)

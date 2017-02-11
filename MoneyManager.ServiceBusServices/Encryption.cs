@@ -20,7 +20,7 @@ using System.Security.Cryptography;
 // are ommited for better readability 
 // 
 //HEY, it's the password that deals with your work 1120
-public class EncDec2
+public class EncDec
 {
     // Encrypt a byte array into a byte array using a key and an IV 
     public static byte[] Encrypt(byte[] clearData, byte[] Key, byte[] IV)
