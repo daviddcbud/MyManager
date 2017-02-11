@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.ServiceBusServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.ServiceBusConsole", "MoneyManager.ServiceBusConsole\MoneyManager.ServiceBusConsole.csproj", "{FC857853-7EB6-4FE4-93E1-D1952784F5D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLookup", "SimpleLookup\SimpleLookup.csproj", "{B5552E31-5C80-4095-930A-A9827F08A7D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FC857853-7EB6-4FE4-93E1-D1952784F5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC857853-7EB6-4FE4-93E1-D1952784F5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC857853-7EB6-4FE4-93E1-D1952784F5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
