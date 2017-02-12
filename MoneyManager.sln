@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.ServiceBusCons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLookup", "SimpleLookup\SimpleLookup.csproj", "{B5552E31-5C80-4095-930A-A9827F08A7D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeItHappen", "MakeItHappen\MakeItHappen.csproj", "{1008E11D-88F0-44FB-B2D7-BDB06B774C93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5552E31-5C80-4095-930A-A9827F08A7D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1008E11D-88F0-44FB-B2D7-BDB06B774C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1008E11D-88F0-44FB-B2D7-BDB06B774C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1008E11D-88F0-44FB-B2D7-BDB06B774C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1008E11D-88F0-44FB-B2D7-BDB06B774C93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
