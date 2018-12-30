@@ -41,7 +41,7 @@ namespace MakeItHappen
             }
             if (!System.IO.Directory.Exists(basePath))
             {
-                System.IO.Directory.CreateDirectory(newDir);
+                //System.IO.Directory.CreateDirectory(newDir);
             }
             var folders = System.IO.Directory.GetDirectories(folder);
              

@@ -15,6 +15,8 @@ namespace MoneyManager
     {
 
        public DelegateCommand PayCommand { get; set; }
+        public DelegateCommand SelectAllCommand { get; set; }
+        public DelegateCommand CloseCommand { get; set; }
        bool Loading = false;
         public decimal Total { get; set; }
        public ObservableCollection<CCItemVM> LineItems { get; set; }
@@ -119,7 +121,15 @@ namespace MoneyManager
             LoadItems();
             events.GetEvent<CCAmountChanged>().Subscribe((x) => ComputeTotal());
             PayCommand = new DelegateCommand(Pay);
-             
+            SelectAllCommand = new DelegateCommand(() =>
+              {
+                  Loading = true;
+                  foreach (var l in LineItems) l.IsPaid = true;
+                  Loading = false;
+                  ComputeTotal();
+              });
+            CloseCommand = new DelegateCommand(() => events.GetEvent<CloseTabEvent>().Publish(null));
+
         }
         void Pay()
         {

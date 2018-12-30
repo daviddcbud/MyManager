@@ -17,7 +17,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox>
+            <StackPanel Orientation="Horizontal">
             <Button HorizontalAlignment="Left" Height="25" Command="{Binding PayCommand}" Content="Pay"/>
+             <Button Margin="10,0,0,0"  HorizontalAlignment="Left" Height="25" Command="{Binding SelectAllCommand}" Content="Select All"/>
+                <Button Margin="10,0,0,0"  HorizontalAlignment="Left" Height="25" Command="{Binding CloseCommand}" Content="Close"/>
+            </StackPanel>
         </GroupBox>
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
             <GroupBox Header="Budget Items" >
