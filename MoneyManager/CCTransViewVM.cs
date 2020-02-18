@@ -8,9 +8,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data.Entity;
 namespace MoneyManager
 {
+
+    public class CCTransView2 : CCTransViewVM
+    {
+        public CCTransView2()
+        {
+            Type = 1;
+        }
+    }
+
    public class CCTransViewVM: BindableBase
     {
 
@@ -22,13 +31,16 @@ namespace MoneyManager
        public ObservableCollection<CCItemVM> LineItems { get; set; }
         MoneyManagerEntities model;
         public List<Category> Categories {get;set;}
-         
-         
-        void LoadItems()
+
+        public CCTransViewVM()
+        {
+            Type = 0;
+        }
+        public void LoadItems()
         {
             Loading = true;
             LineItems = new ObservableCollection<CCItemVM>();
-            var list = model.CreditCardTransactions.Include("Category").Where(x => x.Paid ==false).OrderBy(x=>x.Date).ToList();
+            var list = model.CreditCardTransactions.Where(x=>x.Type==Type).Include("Category").Where(x => x.Paid ==false).OrderBy(x=>x.Date).ToList();
             foreach (var item in list)
             {
                 var newItem = container.Resolve<CCItemVM>();
@@ -59,6 +71,8 @@ namespace MoneyManager
         }
 
         public decimal TotalToPay { get; set; }
+        public  int Type { get;   set; }
+
         void ComputeTotal()
         {
             TotalToPay = LineItems.Where(x=>x.IsPaid).Sum(x => x.Amount);
@@ -73,7 +87,7 @@ namespace MoneyManager
                 if (findIt == null && item.Category !=null)
                  {
                     findIt = new CreditCardTransaction();
-                     
+                    findIt.Type = Type;
                     model.CreditCardTransactions.Add(findIt);
                 }
                 if (item.Category == null && findIt !=null)

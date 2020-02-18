@@ -65,7 +65,7 @@ namespace MoneyManager
         {
             var vc = container.Resolve<CCTransView>();
             var tabItem = new TabItem();
-            tabItem.Header = "Credit Card";
+            tabItem.Header = "Credit Card (Chrissi)";
             tabItem.Content = vc;
             tabs.Items.Add(tabItem);
             tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
@@ -113,6 +113,18 @@ namespace MoneyManager
             var vc = container.Resolve<SavingsView>();
             var tabItem = new TabItem();
             tabItem.Header = "Savings";
+            tabItem.Content = vc;
+            tabs.Items.Add(tabItem);
+            tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];
+        }
+
+        private void MenuItem_Click_6(object sender, RoutedEventArgs e)
+        {
+            var vc = container.Resolve<CCTransView>();
+            (vc.DataContext as CCTransViewVM).Type = 1;
+            (vc.DataContext as CCTransViewVM).LoadItems();
+            var tabItem = new TabItem();
+            tabItem.Header = "Credit Card (David)";
             tabItem.Content = vc;
             tabs.Items.Add(tabItem);
             tabs.SelectedItem = tabs.Items[tabs.Items.Count - 1];

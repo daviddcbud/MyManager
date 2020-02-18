@@ -20,6 +20,7 @@ namespace MoneyManager
         public decimal Amount { get; set; }
         public bool Paid { get; set; }
         public string Notes { get; set; }
+        public int Type { get; set; }
     
         public virtual Category Category { get; set; }
     }
